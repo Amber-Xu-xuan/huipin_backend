@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Candidate">
+    <!--&lt;!&ndash;<resultMap id="CandidateMessage" type="Candidate">&ndash;&gt;-->
+        <!--&lt;!&ndash;<id column="cmid" property="cmid"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="sex" property="sex"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="headImage" property="sex"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="residenceAddress" property="residenceAddress"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="nowAddress" property="nowAddress"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="phone" property="phone"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="email" property="email"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="rId" property="rId"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="findJobStatus" property="findJobStatus"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="jiId" property="jiId"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="birthday" property="birthday"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="hobby" property="hobby"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="cusername" property="cusername"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</resultMap>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<resultMap id="Candidate" type="com.qtu.zp.domain.Candidate">&ndash;&gt;-->
+        <!--&lt;!&ndash;<id column="cid" property="cid"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="cusername" property="cusername"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="cpassword" property="cpassword"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="ccreateTime" property="ccreateTime"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="status" property="status"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="findJobTime" property="findJobTime"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<result column="phone" property="phone"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</resultMap>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;&lt;!&ndash;求职者用户登录&ndash;&gt;&ndash;&gt;-->
+    <!--&lt;!&ndash;<select id="findCandidateByCid" parameterType="int" resultMap="Candidate">&ndash;&gt;-->
+        <!--&lt;!&ndash;SELECT *&ndash;&gt;-->
+        <!--&lt;!&ndash;FROM `candidate_login`&ndash;&gt;-->
+        <!--&lt;!&ndash;WHERE `candidate_login.phone` = #{phone}&ndash;&gt;-->
+    <!--&lt;!&ndash;</select>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;注册求职者用户&ndash;&gt;-->
+    <!--<insert id="addCandidate" parameterType="Candidate">-->
+
+        <!--&lt;!&ndash; mysql插入数据后，获取id &ndash;&gt;-->
+        <!--<selectKey keyProperty="cid" resultType="int" order="AFTER" >-->
+            <!--SELECT LAST_INSERT_ID() as id-->
+        <!--</selectKey>-->
+
+        <!--insert into candidate_login-->
+        <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+            <!--<if test="cusername != null and cusername!=''">-->
+                <!--cusername,-->
+            <!--</if>-->
+            <!--<if test="cpassword != null and cpassword!=''">-->
+                <!--cpassword,-->
+            <!--</if>-->
+            <!--<if test="phone != null and phone!=''">-->
+                <!--phone-->
+            <!--</if>-->
+
+        <!--</trim>-->
+        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+            <!--<if test="cusername != null and cusername!=''">-->
+                <!--#{cusername},-->
+            <!--</if>-->
+            <!--<if test="cpassword != null and cpassword!=''">-->
+                <!--#{cpassword},-->
+            <!--</if>-->
+            <!--<if test="phone != null and phone!=''">-->
+                <!--#{phone}-->
+            <!--</if>-->
+        <!--</trim>-->
+    <!--</insert>-->
+
+    <!--&lt;!&ndash; 单条求职者数据删除 &ndash;&gt;-->
+    <!--<delete id="deleteCandidate" parameterType="int">-->
+        <!--delete from candidate_login where cid=#{cid}-->
+    <!--</delete>-->
+
+    <!--&lt;!&ndash;修改密码&ndash;&gt;-->
+    <!--<update id="updatePassword" parameterType="java.lang.String">-->
+        <!--update candidate_login-->
+        <!--<set>-->
+            <!--<if test="cpassword != null and cpassword!=''">-->
+                <!--cpassword = #{cpassword},-->
+            <!--</if>-->
+        <!--</set>-->
+        <!--where cid = #{cid}-->
+    <!--</update>-->
+
+
+</mapper>

@@ -1,4 +1,4 @@
-package com.qtu.zp.model;
+package com.qtu.zp.domain;
 
 /**
  * @Author amberXu
@@ -7,7 +7,6 @@ package com.qtu.zp.model;
  * @Param
  **/
 public class CandidateMessage {
-    private String csex;
     private String candidateName;
     private String headImage;
     private String introduce;
@@ -21,14 +20,6 @@ public class CandidateMessage {
     private String rId;
     private String findJobStatus;
     private String jiId;
-
-    public String getCsex() {
-        return csex;
-    }
-
-    public void setCsex(String csex) {
-        this.csex = csex;
-    }
 
     public String getCandidateName() {
         return candidateName;
@@ -137,7 +128,6 @@ public class CandidateMessage {
     @Override
     public String toString() {
         return "CandidateMessage{" +
-                "csex='" + csex + '\'' +
                 ", candidateName='" + candidateName + '\'' +
                 ", headImage='" + headImage + '\'' +
                 ", introduce='" + introduce + '\'' +

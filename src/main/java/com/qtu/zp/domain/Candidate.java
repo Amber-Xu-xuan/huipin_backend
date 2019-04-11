@@ -1,4 +1,6 @@
-package com.qtu.zp.model;
+package com.qtu.zp.domain;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * @Author amberXu
@@ -7,8 +9,12 @@ package com.qtu.zp.model;
  * @Param
  **/
 public class Candidate {
+
+    @NotNull(message = "电话不允许为空")
+    private String phone; //电话
     private Integer cid;
-    private String cName;
+    private String cusername;
+    @NotNull(message = "密码不能为空")
     private String cpassword;
     private String ccreateTime;
     private String findJobTime;
@@ -18,6 +24,14 @@ public class Candidate {
     private String requestJobNum;
     private CandidateMessage candidate_message;
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
     public Integer getCid() {
         return cid;
     }
@@ -26,12 +40,12 @@ public class Candidate {
         this.cid = cid;
     }
 
-    public String getcName() {
-        return cName;
+    public String getcusername() {
+        return cusername;
     }
 
-    public void setcName(String cName) {
-        this.cName = cName;
+    public void setcusername(String cusername) {
+        this.cusername = cusername;
     }
 
     public String getCpassword() {
@@ -101,7 +115,9 @@ public class Candidate {
     @Override
     public String toString() {
         return "Candidate{" +
-                "cName='" + cName + '\'' +
+                "phone='" + phone + '\'' +
+                ", cid=" + cid +
+                ", cusername='" + cusername + '\'' +
                 ", cpassword='" + cpassword + '\'' +
                 ", ccreateTime='" + ccreateTime + '\'' +
                 ", findJobTime='" + findJobTime + '\'' +
