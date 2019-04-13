@@ -2,6 +2,7 @@ package com.qtu.zp.controller;
 
 import com.qtu.zp.domain.Candidate;
 import com.qtu.zp.domain.CandidateMessage;
+import com.qtu.zp.domain.JobPosition;
 import com.qtu.zp.model.LoginModel;
 import com.qtu.zp.service.CandidateService;
 import com.qtu.zp.utils.result.Result;
@@ -10,6 +11,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.*;
 
@@ -33,40 +37,57 @@ public class CandidateController {
 
     @Resource
     private CandidateService candidateService;
+
     @RequestMapping("/getAllCandidate")
-    public List<Candidate> getAllCandidate(){
+    public List<Candidate> getAllCandidate() {
 
         List<Candidate> candidates = candidateService.getAllCandidate();
         return candidates;
     }
 
-//    @CrossOrigin
-//    @RequestMapping(value="/", method= RequestMethod.GET)
-//    public List<Candidate> getCandidateList() {
-//        // 处理"/Candidates/"的GET请求，用来获取用户列表
-//        // 还可以通过@RequestParam从页面中传递参数来进行查询条件或者翻页信息的传递
-//        List<Candidate> r = new ArrayList<Candidate>(Candidates.values());
-//        return r;
-//    }
 
     @CrossOrigin
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public Result login(@RequestBody LoginModel user , BindingResult bindingResult) {
-
-//@Valid Candidate loginInfoVo
-        Candidate candidates = candidateService.findCandidateByPhone(user.getPhone());
-
-        if (bindingResult.hasErrors()) {
+    @RequestMapping(value = "/candidate/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public Result login(@RequestBody LoginModel user, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+        Candidate candidate = candidateService.findCandidateByPhone(user.getPhone());
+        if (candidate.getCpassword().equals(user.getPassword())) {
+            request.getSession().setAttribute("candidateInfo", candidate);
+            return ResultFactory.buildSuccessResult("登陆成功。");
+        } else if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
             return ResultFactory.buildFailResult(message);
-        }
-        if (!Objects.equals("15860493120", user.getPhone()) || !Objects.equals("123456", user.getPassword())) {
-            String message = String.format("登陆失败，详细信息[用户名、密码信息不正确]。");
+        } else {
+            String message = String.format("登陆失败，用户名、密码信息不正确。");
             return ResultFactory.buildFailResult(message);
         }
-        return ResultFactory.buildSuccessResult("登陆成功。");
     }
 
+    @CrossOrigin
+    @RequestMapping(value = "/candidate/logout", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    public Result logout(BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("candidateInfo");
+        Object candidate = session.getAttribute("candidateInfo");
+        if (candidate == null) {
+            String message = String.format("注销退出失败。");
+            return ResultFactory.buildFailResult(message);
+        } else {
+            String message = String.format("注销退出成功。");
+            return ResultFactory.buildFailResult(message);
+        }
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/candidate/getAllJobList", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    public Result getAllJobList( HttpServletRequest request, HttpServletResponse response) {
+            List<JobPosition> jobPositions = candidateService.getAllJobList();
+
+            if(jobPositions == null){
+                return ResultFactory.buildFailResult("无法获取数据");
+            }else{
+                return ResultFactory.buildSuccessResult(jobPositions);
+            }
+    }
 
 //
 //    @RequestMapping(value="/", method=RequestMethod.POST)

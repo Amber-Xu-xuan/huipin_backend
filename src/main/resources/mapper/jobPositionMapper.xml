@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.JobPositionMapper">
+    <resultMap id="JobPosition" type="com.qtu.zp.domain.JobPosition">
+        <id column="jpId" property="jpId"/>
+        <result column="jName" property="jName"/>
+        <result column="salary" property="salary"/>
+        <result column="jarea" property="jarea"/>
+        <result column="experienceDuration" property="experienceDuration"/>
+        <result column="education" property="education"/>
+        <result column="obligation" property="obligation"/>
+        <result column="qualification" property="qualification"/>
+        <result column="workAddress" property="workAddress"/>
+        <result column="jType" property="jType"/>
+        <result column="jPublishDate" property="jPublishDate"/>
+        <result column="stopRecruitDate" property="stopRecruitDate"/>
+        <result column="eName" property="eName"/>
+    </resultMap>
+
+    <resultMap id="Enterprise" type="com.qtu.zp.domain.Enterprise">
+        <id column="eid" property="eid"/>
+        <result column="eName" property="eName"/>
+        <result column="epassword" property="epassword"/>
+        <result column="ecreateTime" property="ecreateTime"/>
+        <result column="ephone" property="ephone"/>
+    </resultMap>
+
+    <!--企业用户获取到自己公司发布的岗位招聘信息-->
+    <select id="findJobListByEName" parameterType="java.lang.String" resultMap="JobPosition">
+        SELECT *
+        FROM job_position j
+        WHERE j.eName = #{eName}
+    </select>
+
+    <select id="getAllJobList" resultMap="JobPosition">
+        SELECT * FROM job_position
+    </select>
+
+
+</mapper>

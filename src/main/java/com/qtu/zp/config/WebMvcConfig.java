@@ -1,5 +1,6 @@
 package com.qtu.zp.config;
 
+import com.qtu.zp.component.LoginHandlerInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.*;
@@ -32,6 +33,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedMethods("GET", "POST", "PUT", "DELETE")//设置允许的方法
                 .maxAge(3600);//跨域允许时间
     }
+
+//    添加登录拦截器
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor())
+                .addPathPatterns("/enterpriseCenter");
+    }
+
 
 //    @Override
 //    public void addViewControllers(ViewControllerRegistry registry) {

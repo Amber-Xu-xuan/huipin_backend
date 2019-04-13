@@ -30,8 +30,8 @@
     <!--求职者用户登录-->
     <select id="findCandidateByPhone" parameterType="java.lang.String" resultMap="Candidate">
         SELECT *
-        FROM `candidate_login` a
-        WHERE `a.phone` = #{phone}
+        FROM candidate_login a
+        WHERE a.phone = #{phone}
     </select>
 
     <select id="getAllCandidate" resultMap="Candidate">

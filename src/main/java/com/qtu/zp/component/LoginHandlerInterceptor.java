@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LoginHandlerInterceptor implements HandlerInterceptor {
     //目标方法执行之前
+//    登录拦截器
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object user = request.getSession().getAttribute("loginCandidate");
+        Object user = request.getSession().getAttribute("enterpriseInfo");
         if(user == null){
             //未登录，返回登陆页面
             request.setAttribute("msg","没有权限请先登陆");
-            request.getRequestDispatcher("/landing").forward(request,response);
+            request.getRequestDispatcher("/login").forward(request,response);
             return false;
         }else{
             //已登录，放行请求

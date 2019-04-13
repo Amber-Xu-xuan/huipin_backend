@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.EnterpriseMapper">
+    <!--<resultMap id="EnterpriseMessage" type="Enterprise">-->
+    <!--<id column="cmid" property="cmid"/>-->
+    <!--<result column="sex" property="sex"/>-->
+    <!--<result column="headImage" property="sex"/>-->
+    <!--<result column="residenceAddress" property="residenceAddress"/>-->
+    <!--<result column="nowAddress" property="nowAddress"/>-->
+    <!--<result column="phone" property="phone"/>-->
+    <!--<result column="email" property="email"/>-->
+    <!--<result column="rId" property="rId"/>-->
+    <!--<result column="findJobStatus" property="findJobStatus"/>-->
+    <!--<result column="jiId" property="jiId"/>-->
+    <!--<result column="birthday" property="birthday"/>-->
+    <!--<result column="hobby" property="hobby"/>-->
+    <!--<result column="cusername" property="cusername"/>-->
+    <!--</resultMap>-->
+
+    <resultMap id="Enterprise" type="com.qtu.zp.domain.Enterprise">
+        <id column="eid" property="eid"/>
+        <result column="eName" property="eName"/>
+        <result column="epassword" property="epassword"/>
+        <result column="ecreateTime" property="ecreateTime"/>
+        <result column="ephone" property="ephone"/>
+    </resultMap>
+
+    <!--企业用户登录-->
+    <select id="findEnterpriseByPhone" parameterType="java.lang.String" resultMap="Enterprise">
+        SELECT *
+        FROM enterprise_login a
+        WHERE a.ephone = #{ephone}
+    </select>
+
+    <select id="getAllEnterprise" resultMap="Enterprise">
+        SELECT * FROM enterprise_login
+    </select>
+
+</mapper>

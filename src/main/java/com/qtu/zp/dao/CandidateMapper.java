@@ -13,10 +13,7 @@ import java.util.List;
 public interface CandidateMapper {
 
     public List<Candidate> getAllCandidate();
-    /*
-     *通过电话号码获取用户信息
-     */
-//    @Select("select * from candidate_login where phone=#{phone}")
+//     通过电话号码获取用户信息
     Candidate findCandidateByPhone(String phone);
 
 //    @Select("select * from employee limit #{currpage},#{pagecount}")
