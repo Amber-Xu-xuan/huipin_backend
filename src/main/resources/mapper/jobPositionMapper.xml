@@ -15,6 +15,21 @@
         <result column="jPublishDate" property="jPublishDate"/>
         <result column="stopRecruitDate" property="stopRecruitDate"/>
         <result column="eName" property="eName"/>
+
+        <association property="enterpriseMessage" javaType="com.qtu.zp.domain.EnterpriseMessage">
+            <id column="emid" property="emid"/>
+            <result column="emintroduce" property="emintroduce"/>
+            <result column="emstablishmentDate" property="emstablishmentDate"/>
+            <result column="emaddress" property="emaddress"/>
+            <result column="emphone" property="emphone"/>
+            <result column="ememail" property="ememail"/>
+            <result column="emnum" property="emnum"/>
+            <result column="businessScope" property="businessScope"/>
+            <result column="enterpriceStatus" property="enterpriceStatus"/>
+            <result column="emFinancing" property="emFinancing"/>
+            <result column="companyScaleList" property="companyScaleList"/>
+        </association>
+
     </resultMap>
 
     <resultMap id="Enterprise" type="com.qtu.zp.domain.Enterprise">
@@ -33,7 +48,21 @@
     </select>
 
     <select id="getAllJobList" resultMap="JobPosition">
-        SELECT * FROM job_position
+        SELECT * FROM job_position j,enterprise_message e where e.emName = j.eName
+    </select>
+
+    <!--通过条件筛选出相关岗位信息-->
+    <select id="getJobListByFilter" parameterType="com.qtu.zp.model.CandidateSelectFilter"  resultMap="JobPosition">
+        select *  from job_position j,enterprise_message e
+        <where>
+            <if  test="aid!=null">
+                aid=#{aid}
+            </if>
+
+        </where>
+        <!--  <if test="start!=null and size!=null">
+              limit #{start},#{size}
+         </if>  -->
     </select>
 
 

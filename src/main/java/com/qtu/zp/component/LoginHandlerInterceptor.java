@@ -16,6 +16,7 @@ public class LoginHandlerInterceptor implements HandlerInterceptor {
 //    登录拦截器
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
         Object user = request.getSession().getAttribute("enterpriseInfo");
         if(user == null){
             //未登录，返回登陆页面

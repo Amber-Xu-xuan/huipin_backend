@@ -20,6 +20,16 @@ public class JobPosition {
     private String stopRecruitDate; //停止招聘时间
     private String eName;
 
+    private EnterpriseMessage enterpriseMessage;
+
+    public EnterpriseMessage getEnterpriseMessage() {
+        return enterpriseMessage;
+    }
+
+    public void setEnterpriseMessage(EnterpriseMessage enterpriseMessage) {
+        this.enterpriseMessage = enterpriseMessage;
+    }
+
     public Integer getJpId() {
         return jpId;
     }
@@ -140,6 +150,7 @@ public class JobPosition {
                 ", jPublishDate='" + jPublishDate + '\'' +
                 ", stopRecruitDate='" + stopRecruitDate + '\'' +
                 ", eName='" + eName + '\'' +
+                ", enterpriseMessage=" + enterpriseMessage +
                 '}';
     }
 }

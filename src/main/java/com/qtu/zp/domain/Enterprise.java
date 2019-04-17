@@ -11,6 +11,14 @@ public class Enterprise {
     private String ecreateTime; //
     private String ephone; //
 
+    public Enterprise(Integer eid, String eName, String epassword, String ecreateTime, String ephone) {
+        this.eid = eid;
+        this.eName = eName;
+        this.epassword = epassword;
+        this.ecreateTime = ecreateTime;
+        this.ephone = ephone;
+    }
+
     public Integer getEid() {
         return eid;
     }

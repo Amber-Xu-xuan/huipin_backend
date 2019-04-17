@@ -66,10 +66,17 @@
         </dependency>
 
         <!--fastJSON-->
+        <!--<dependency>-->
+            <!--<groupId>com.alibaba</groupId>-->
+            <!--<artifactId>fastjson</artifactId>-->
+            <!--&lt;!&ndash;<version>1.2.35</version>&ndash;&gt;-->
+        <!--</dependency>-->
+
+        <!--pageHelper分页-->
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <!--<version>1.2.35</version>-->
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper</artifactId>
+            <version>4.0.0</version>
         </dependency>
 
     </dependencies>

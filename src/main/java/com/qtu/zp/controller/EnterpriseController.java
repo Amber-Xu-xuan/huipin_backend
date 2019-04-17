@@ -1,8 +1,10 @@
 package com.qtu.zp.controller;
 
+import com.github.pagehelper.Page;
 import com.qtu.zp.domain.Enterprise;
 import com.qtu.zp.domain.JobPosition;
 import com.qtu.zp.model.LoginModel;
+import com.qtu.zp.model.PageModel;
 import com.qtu.zp.service.EnterpriseService;
 import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
@@ -50,6 +52,8 @@ public class EnterpriseController {
         Enterprise enterprise = enterpriseService.findEnterpriseByPhone(user.getPhone());
         if(enterprise.getEpassword().equals(user.getPassword())){
             request.getSession().setAttribute("enterpriseInfo",enterprise);
+            Enterprise currenttenterprise  = (Enterprise)request.getSession().getAttribute("enterpriseInfo");
+            System.out.println(enterprise.toString());
             return ResultFactory.buildSuccessResult("登陆成功。");
         }else if(bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
@@ -65,7 +69,7 @@ public class EnterpriseController {
     public Result logout(BindingResult bindingResult,HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         session.removeAttribute("enterpriseInfo");
-        Object enterprise = session.getAttribute("enterpriseInfo");
+        Enterprise enterprise = (Enterprise)session.getAttribute("enterpriseInfo");
         if (enterprise == null)
         {
             String message = String.format("注销退出失败。");
@@ -78,27 +82,33 @@ public class EnterpriseController {
 
     /**
      *
-     * @param bindingResult
+     * @param
      * @param request
      * @param response
      * @return
      */
     @CrossOrigin
     @RequestMapping(value = "/enterprise/getJobListByEName", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public Result  getJobListByEName(BindingResult bindingResult,HttpServletRequest request, HttpServletResponse response) {
+    public Result  getJobListByEName(@RequestParam("pageCode") Integer pageCode, @RequestParam("pageSize")Integer pageSize,/*BindingResult bindingResult,*/HttpServletRequest request, HttpServletResponse response) {
         HttpSession  session = request.getSession();
-        Enterprise enterprise = (Enterprise)session.getAttribute("enterpriseInfo");
+        Object enterprise = session.getAttribute("enterpriseInfo");
+        System.out.println("从获取到的session储存信息" + enterprise.toString());
 //        获取公司名称
-        if (enterprise == null){
+//        if(bindingResult.hasErrors()){
+//            String message = String.format("获取列表失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
+//            return ResultFactory.buildFailResult(message);
+//        }
+         if (enterprise == null){
             return ResultFactory.buildFailResult("请先登录您的企业账号");
         }else {
-            String eName = enterprise.geteName();
-            if (eName == null){
-                return ResultFactory.buildFailResult("请先完善您的企业信息");
-            }else{
-                List<JobPosition> jobPositions = enterpriseService.findJobListByEName(eName);
-                return ResultFactory.buildSuccessResult(jobPositions);
-            }
+//            String eName = enterprise.geteName();
+//            if (eName == null){
+//                return ResultFactory.buildFailResult("请先完善您的企业信息");
+//            }else{
+//                PageModel result = enterpriseService.findJobListByEName(pageCode, pageSize,eName);
+//                return ResultFactory.buildSuccessResult(result);
+             return null;
+//            }
 
         }
     }

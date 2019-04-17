@@ -81,7 +81,7 @@ public class CandidateController {
     @RequestMapping(value = "/candidate/getAllJobList", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     public Result getAllJobList( HttpServletRequest request, HttpServletResponse response) {
             List<JobPosition> jobPositions = candidateService.getAllJobList();
-
+            System.out.println("获取到的数据" + jobPositions.toString());
             if(jobPositions == null){
                 return ResultFactory.buildFailResult("无法获取数据");
             }else{
@@ -118,7 +118,7 @@ public class CandidateController {
 //        return "success";
 //    }
 //
-//    @RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+//    @RequestMapping(value="", method=RequestMethod.DELETE)
 //    public String deleteCandidate(@PathVariable Long id) {
 //        // 处理"/Candidates/{id}"的DELETE请求，用来删除Candidate
 //        Candidates.remove(id);

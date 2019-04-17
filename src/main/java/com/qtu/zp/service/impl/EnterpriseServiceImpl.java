@@ -1,9 +1,12 @@
 package com.qtu.zp.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.qtu.zp.dao.EnterpriseMapper;
 import com.qtu.zp.dao.JobPositionMapper;
 import com.qtu.zp.domain.Enterprise;
 import com.qtu.zp.domain.JobPosition;
+import com.qtu.zp.model.PageModel;
 import com.qtu.zp.service.EnterpriseService;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +38,13 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public List<JobPosition> findJobListByEName(String eName) {
-        return jobPositionMapper.findJobListByEName(eName);
+    public PageModel findJobListByEName(Integer pageCode,Integer pageSize,String eName) {
+        //使用Mybatis分页插件
+        PageHelper.startPage(pageCode,pageSize);
+
+        //调用分页查询方法，其实就是查询所有数据，mybatis自动帮我们进行分页计算
+        Page<JobPosition> page = jobPositionMapper.findJobListByEName(eName);
+        return new PageModel(page.getTotal(),page.getResult());
     }
 
 }

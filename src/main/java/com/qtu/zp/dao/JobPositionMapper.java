@@ -1,5 +1,6 @@
 package com.qtu.zp.dao;
 
+import com.github.pagehelper.Page;
 import com.qtu.zp.domain.JobPosition;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +12,7 @@ import java.util.List;
  */
 @Mapper
 public interface JobPositionMapper {
-    List<JobPosition> findJobListByEName(String eName);
+    Page<JobPosition> findJobListByEName(String eName);
     List<JobPosition> getAllJobList();
+    List<JobPosition> getJobListByFilter(String salary, String experience, String education, String financing, String companyScale);
 }
