@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.ManagerMapper">
+    <resultMap id="Manager" type="com.qtu.zp.domain.Manager">
+        <id column="mid" property="mid"/>
+        <result column="managerName" property="managerName"/>
+        <result column="headImage" property="headImage"/>
+        <result column="createTime" property="createTime"/>
+        <result column="mpassword" property="mpassword"/>
+        <result column="headImage" property="headImage"/>
+        <result column="createTime" property="createTime"/>
+        <result column="mpassword" property="mpassword"/>
+        <result column="mphone" property="mphone"/>
+    </resultMap>
+
+
+    <!--管理员通过电话号码获取自身信息-->
+    <select id="findManagerBy" parameterType="java.lang.String" resultMap="Manager">
+        SELECT *
+        FROM manager m
+        WHERE m.mphone = #{mphone}
+    </select>
+
+
+
+
+
+
+</mapper>

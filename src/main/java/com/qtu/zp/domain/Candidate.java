@@ -10,19 +10,21 @@ import javax.validation.constraints.NotNull;
  **/
 public class Candidate {
 
-    @NotNull(message = "电话不允许为空")
     private String phone; //电话
     private Integer cid;
-    private String cusername;
-    @NotNull(message = "密码不能为空")
+    private String cusername; //用户名
     private String cpassword;
     private String ccreateTime;
     private String findJobTime;
     private String status;
-    private String requestJobList;
-    private String checked;  //当前你已经投递过多少简历,数据库中不用有
-    private String requestJobNum;
-    private CandidateMessage candidate_message;
+//    private String requestJobList;
+//    private String checked;  //当前你已经投递过多少简历,数据库中不用有
+//    private String requestJobNum;
+
+//    设置投递过某岗位的求职者列表
+//    当求职者点击投递简历之后，在相应岗位上的求职者列表中添加改求职者的信息
+//    招聘企业可以点击招聘详情查看该岗位的相应投递简历情况。
+//    通过电话联系或e-mail联系进行沟通
 
     public void setPhone(String phone) {
         this.phone = phone;
@@ -78,54 +80,5 @@ public class Candidate {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getRequestJobList() {
-        return requestJobList;
-    }
-
-    public void setRequestJobList(String requestJobList) {
-        this.requestJobList = requestJobList;
-    }
-
-    public String getChecked() {
-        return checked;
-    }
-
-    public void setChecked(String checked) {
-        this.checked = checked;
-    }
-
-    public String getRequestJobNum() {
-        return requestJobNum;
-    }
-
-    public void setRequestJobNum(String requestJobNum) {
-        this.requestJobNum = requestJobNum;
-    }
-
-    public CandidateMessage getCandidate_message() {
-        return candidate_message;
-    }
-
-    public void setCandidate_message(CandidateMessage candidate_message) {
-        this.candidate_message = candidate_message;
-    }
-
-    @Override
-    public String toString() {
-        return "Candidate{" +
-                "phone='" + phone + '\'' +
-                ", cid=" + cid +
-                ", cusername='" + cusername + '\'' +
-                ", cpassword='" + cpassword + '\'' +
-                ", ccreateTime='" + ccreateTime + '\'' +
-                ", findJobTime='" + findJobTime + '\'' +
-                ", status='" + status + '\'' +
-                ", requestJobList='" + requestJobList + '\'' +
-                ", checked='" + checked + '\'' +
-                ", requestJobNum='" + requestJobNum + '\'' +
-                ", candidate_message=" + candidate_message +
-                '}';
     }
 }

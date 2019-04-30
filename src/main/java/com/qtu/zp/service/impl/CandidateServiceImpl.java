@@ -1,9 +1,12 @@
 package com.qtu.zp.service.impl;
 
+import com.qtu.zp.Vo.FilterConditionVo;
 import com.qtu.zp.dao.CandidateMapper;
 import com.qtu.zp.dao.JobPositionMapper;
 import com.qtu.zp.domain.Candidate;
+import com.qtu.zp.domain.CandidateMessage;
 import com.qtu.zp.domain.JobPosition;
+import com.qtu.zp.domain.JobPositionAndEnterpriseMessage;
 import com.qtu.zp.service.CandidateService;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +36,18 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
-    public List<JobPosition> getAllJobList() {
+    public List<JobPositionAndEnterpriseMessage> getAllJobList() {
         return jobPositionMapper.getAllJobList();
+    }
+
+    @Override
+    public void addCandidate(Candidate candidate, CandidateMessage candidateMessage) {
+        candidateMapper.addCandidate(candidate);
+        candidateMapper.addCandidateMessage(candidateMessage);
+    }
+
+    @Override
+    public List<JobPositionAndEnterpriseMessage> getJobListByFilterCondition(FilterConditionVo selectCondition) {
+        return jobPositionMapper.getJobListByFilterCondition(selectCondition);
     }
 }

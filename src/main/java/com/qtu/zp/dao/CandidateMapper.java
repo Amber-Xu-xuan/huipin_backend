@@ -1,6 +1,7 @@
 package com.qtu.zp.dao;
 
 import com.qtu.zp.domain.Candidate;
+import com.qtu.zp.domain.CandidateMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,6 +17,10 @@ public interface CandidateMapper {
 //     通过电话号码获取用户信息
     Candidate findCandidateByPhone(String phone);
 
+
+//    注册求职者
+    void addCandidate(Candidate candidate);
+    void addCandidateMessage(CandidateMessage candidateMessage);
 //    @Select("select * from employee limit #{currpage},#{pagecount}")
 //    List<Employee> allemps(Integer currpage, Integer pagecount);
 //

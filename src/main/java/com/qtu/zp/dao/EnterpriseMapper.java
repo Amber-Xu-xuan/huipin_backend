@@ -1,7 +1,7 @@
 package com.qtu.zp.dao;
 
 import com.qtu.zp.domain.Enterprise;
-import com.qtu.zp.domain.JobPosition;
+import com.qtu.zp.domain.EnterpriseMessage;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -16,5 +16,9 @@ public interface EnterpriseMapper {
     //     通过电话号码获取用户信息
     Enterprise findEnterpriseByPhone(String ephone);
 
+    void registerEnterprise(Enterprise enterprise);
+    void registerEnterpriseMessage(EnterpriseMessage enterpriseMessage);
+
+    List<EnterpriseMessage> getEnterpriseByEName(String eName);
 
 }

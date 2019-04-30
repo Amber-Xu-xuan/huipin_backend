@@ -1,9 +1,11 @@
 package com.qtu.zp.controller;
 
+import com.qtu.zp.Vo.CandidateRegisterModel;
+import com.qtu.zp.Vo.FilterConditionVo;
 import com.qtu.zp.domain.Candidate;
-import com.qtu.zp.domain.CandidateMessage;
 import com.qtu.zp.domain.JobPosition;
-import com.qtu.zp.model.LoginModel;
+import com.qtu.zp.Vo.LoginModel;
+import com.qtu.zp.domain.JobPositionAndEnterpriseMessage;
 import com.qtu.zp.service.CandidateService;
 import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
@@ -14,7 +16,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.*;
 
 /**
@@ -27,7 +28,7 @@ import java.util.*;
  * @Param
  **/
 @RestController
-@RequestMapping(value = "/api") // 映射到/candidate路径下
+@RequestMapping(value = "/zp") // 映射到/candidate路径下
 public class CandidateController {
     //    创建线程安全的Map
 //    static Map<Long, Candidate> Candidates = Collections.synchronizedMap(new HashMap<Long, Candidate>());
@@ -38,6 +39,7 @@ public class CandidateController {
     @Resource
     private CandidateService candidateService;
 
+    @CrossOrigin
     @RequestMapping("/getAllCandidate")
     public List<Candidate> getAllCandidate() {
 
@@ -52,7 +54,7 @@ public class CandidateController {
         Candidate candidate = candidateService.findCandidateByPhone(user.getPhone());
         if (candidate.getCpassword().equals(user.getPassword())) {
             request.getSession().setAttribute("candidateInfo", candidate);
-            return ResultFactory.buildSuccessResult("登陆成功。");
+            return ResultFactory.buildSuccessResult(candidate);
         } else if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
             return ResultFactory.buildFailResult(message);
@@ -78,18 +80,46 @@ public class CandidateController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/candidate/getAllJobList", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public Result getAllJobList( HttpServletRequest request, HttpServletResponse response) {
-            List<JobPosition> jobPositions = candidateService.getAllJobList();
-            System.out.println("获取到的数据" + jobPositions.toString());
-            if(jobPositions == null){
-                return ResultFactory.buildFailResult("无法获取数据");
-            }else{
-                return ResultFactory.buildSuccessResult(jobPositions);
-            }
+    @RequestMapping(value = "/getAllJobList", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
+    public Result getAllJobList(HttpServletRequest request, HttpServletResponse response) {
+        List<JobPositionAndEnterpriseMessage> jobPositions = candidateService.getAllJobList();
+//            System.out.println("获取到的数据" + jobPositions.toString());
+        if (jobPositions == null) {
+            return ResultFactory.buildFailResult("无法获取数据");
+        } else {
+            return ResultFactory.buildSuccessResult(jobPositions);
+        }
     }
 
-//
+    //    注册求职者账号
+    @PostMapping(value = "/registerCandidate", produces = "application/json; charset=UTF-8")
+    public Result registerCandidate(@RequestBody CandidateRegisterModel candidateRegisterModel, HttpServletRequest request, HttpServletResponse response) {
+            if (candidateRegisterModel == null) {
+            return ResultFactory.buildFailResult("请重新注册");
+        } else {
+            candidateService.addCandidate(candidateRegisterModel.getCandidate(), candidateRegisterModel.getCandidateMessage());
+            String message = String.format("成功注册。");
+            return ResultFactory.buildSuccessResult(message);
+        }
+
+    }
+
+//    首页通过筛选条件，返回工作列表
+    @GetMapping(value = "/getJobListByFilterCondition",produces = "application/json; charset=UTF-8")
+    public  Result getJobListByFilter(FilterConditionVo selectCondition,HttpServletRequest request, HttpServletResponse response){
+        System.out.println("过滤器的条件" + selectCondition.toString());
+        List<JobPositionAndEnterpriseMessage> jobPositions = candidateService.getJobListByFilterCondition(selectCondition);
+//            System.out.println("获取到的数据" + jobPositions.toString());
+        if (jobPositions == null) {
+            return ResultFactory.buildFailResult("无法获取数据");
+        } else {
+            return ResultFactory.buildSuccessResult(jobPositions);
+        }
+//        return  null;
+    }
+
+// 17606050420@qq.com
+
 //    @RequestMapping(value="/", method=RequestMethod.POST)
 //    public String postCandidate(@ModelAttribute Candidate candidate) {
 //        // 处理"/Candidates/"的POST请求，用来创建Candidate

@@ -2,9 +2,9 @@ package com.qtu.zp.domain;
 
 /**
  * @Author: AmberXu
- * @Date: 2019/4/1 14:44
+ * @Date: 2019/4/28 23:59
  */
-public class JobPosition {
+public class JobPositionAndEnterpriseMessage {
     private Integer jpId;
     private String jName; //
     private String salary; //
@@ -18,7 +18,7 @@ public class JobPosition {
     private String jPublishDate; //发布时间
     private String stopRecruitDate; //停止招聘时间
     private String eName;
-
+    private EnterpriseMessage enterpriseMessage;
 
     public Integer getJpId() {
         return jpId;
@@ -116,21 +116,13 @@ public class JobPosition {
         this.eName = eName;
     }
 
-    @Override
-    public String toString() {
-        return "JobPosition{" +
-                "jpId=" + jpId +
-                ", jName='" + jName + '\'' +
-                ", salary='" + salary + '\'' +
-                ", experienceDuration='" + experienceDuration + '\'' +
-                ", education='" + education + '\'' +
-                ", obligation='" + obligation + '\'' +
-                ", qualification='" + qualification + '\'' +
-                ", workAddress='" + workAddress + '\'' +
-                ", jType='" + jType + '\'' +
-                ", jPublishDate='" + jPublishDate + '\'' +
-                ", stopRecruitDate='" + stopRecruitDate + '\'' +
-                ", eName='" + eName + '\'' +
-                '}';
+
+
+    public EnterpriseMessage getEnterpriseMessage() {
+        return enterpriseMessage;
+    }
+
+    public void setEnterpriseMessage(EnterpriseMessage enterpriseMessage) {
+        this.enterpriseMessage = enterpriseMessage;
     }
 }

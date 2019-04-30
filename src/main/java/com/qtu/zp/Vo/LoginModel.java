@@ -1,4 +1,4 @@
-package com.qtu.zp.model;
+package com.qtu.zp.Vo;
 
 /**
  * @Author: AmberXu

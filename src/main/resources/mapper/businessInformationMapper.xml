@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.BusinessInformationMapper">
+    <resultMap id="BusinessInformation" type="com.qtu.zp.domain.BusinessInformation">
+        <id column="bId" property="bId"/>
+        <result column="eName" property="eName"/>
+        <result column="legalRepresentative" property="legalRepresentative"/>
+        <result column="registeredCapital" property="registeredCapital"/>
+        <result column="establishmentTime" property="establishmentTime"/>
+        <result column="enterprisesType" property="enterprisesType"/>
+        <result column="managementState" property="managementState"/>
+        <result column="registeredAddress" property="registeredAddress"/>
+        <result column="unifiedCreditCode" property="unifiedCreditCode"/>
+        <result column="businessScope" property="businessScope"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="isVerification" property="isVerification"/>
+        <result column="tianYanCha" property="tianYanCha"/>
+    </resultMap>
+
+    <!--企业用户获取到自己公司发布的岗位招聘信息-->
+    <select id="findBusinessInformationByEName" parameterType="java.lang.String" resultMap="BusinessInformation">
+        SELECT *
+        FROM business_information j
+        WHERE j.eName = #{eName}
+    </select>
+
+    <!--<select id="getAllBusinessInformation" resultMap="BusinessInformation">-->
+        <!--SELECT * FROM business_information j,enterprise_message e where e.emName = j.eName-->
+    <!--</select>-->
+
+    <!--添加工商信息-->
+    <insert id="addBusinessInformation" parameterType="com.qtu.zp.domain.BusinessInformation">
+        insert into business_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="eName != null and eName!=''">
+                eName,
+            </if>
+            <if test="legalRepresentative != null and legalRepresentative!=''">
+                legalRepresentative,
+            </if>
+            <if test="registeredCapital != null and registeredCapital!=''">
+                registeredCapital,
+            </if>
+            <if test="establishmentTime != null and establishmentTime!=''">
+                establishmentTime,
+            </if>
+            <if test="enterprisesType != null and enterprisesType!=''">
+                enterprisesType,
+            </if>
+            <if test="managementState != null and managementState!=''">
+                managementState,
+            </if>
+            <if test="registeredAddress != null and registeredAddress!=''">
+                registeredAddress,
+            </if>
+            <if test="unifiedCreditCode != null and unifiedCreditCode!=''">
+                unifiedCreditCode,
+            </if>
+
+            <if test="businessScope != null and businessScope!=''">
+                businessScope,
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                updateTime,
+            </if>
+            <if test="tianYanCha != null and tianYanCha!=''">
+                tianYanCha,
+            </if>
+
+            isVerification
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="eName != null and eName!=''">
+                #{eName},
+            </if>
+            <if test="legalRepresentative != null and legalRepresentative!=''">
+                #{legalRepresentative},
+            </if>
+            <if test="registeredCapital != null and registeredCapital!=''">
+                #{registeredCapital},
+            </if>
+            <if test="establishmentTime != null and establishmentTime!=''">
+                #{establishmentTime},
+            </if>
+            <if test="enterprisesType != null and enterprisesType!=''">
+                #{enterprisesType},
+            </if>
+            <if test="managementState != null and managementState!=''">
+                #{managementState},
+            </if>
+            <if test="registeredAddress != null and registeredAddress!=''">
+                #{registeredAddress},
+            </if>
+            <if test="unifiedCreditCode != null and unifiedCreditCode!=''">
+                #{unifiedCreditCode},
+            </if>
+            <if test="businessScope != null and businessScope!=''">
+                #{businessScope},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                #{updateTime},
+            </if>
+            <if test="tianYanCha != null and tianYanCha!=''">
+                #{tianYanCha},
+            </if>
+            "否"
+        </trim>
+    </insert>
+
+    <!--更新工商信息-->
+    <update id="updateBusinessInformation" parameterType="com.qtu.zp.domain.BusinessInformation">
+        UPDATE business_information
+        <trim prefix="set" suffixOverrides=",">
+            <if test="eName != null and eName!=''">
+                eName=#{eName},
+            </if>
+            <if test="legalRepresentative != null and legalRepresentative!=''">
+                legalRepresentative= #{legalRepresentative},
+            </if>
+            <if test="registeredCapital != null and registeredCapital!=''">
+                registeredCapital= #{registeredCapital},
+            </if>
+            <if test="establishmentTime != null and establishmentTime!=''">
+                establishmentTime= #{establishmentTime},
+            </if>
+            <if test="enterprisesType != null and enterprisesType!=''">
+                enterprisesType= #{enterprisesType},
+            </if>
+            <if test="managementState != null and managementState!=''">
+                managementState=#{managementState},
+            </if>
+            <if test="registeredAddress != null and registeredAddress!=''">
+                registeredAddress= #{registeredAddress},
+            </if>
+            <if test="unifiedCreditCode != null and unifiedCreditCode!=''">
+                unifiedCreditCode #{unifiedCreditCode},
+            </if>
+
+            <if test="businessScope != null and businessScope!=''">
+                businessScope=  #{businessScope},
+            </if>
+            <if test="updateTime != null and updateTime!=''">
+                updateTime=#{updateTime},
+            </if>
+            <if test="tianYanCha != null and tianYanCha!=''">
+                tianYanCha=#{tianYanCha},
+            </if>
+
+            isVerification="否"
+        </trim>
+    </update>
+
+
+
+
+</mapper>

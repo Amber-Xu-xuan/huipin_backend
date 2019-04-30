@@ -6,50 +6,24 @@ package com.qtu.zp.domain;
  */
 public class EnterpriseMessage {
     private Integer emid;
-    private String emName; //公司名称
-//    private String emheadImage; //头像
+    private String emName; //公司名称  外键
+    private String emheadImage; //公司图标
     private String emintroduce; // 简介
     private String emstablishmentDate; //创立日期
     private String emaddress; //公司地址
     private String emphone; //手机号
     private String ememail; //电子邮件
     private String emofficialWebsite; //公司官网
-    private String emnum; //公司总人数
     private String businessScope; //经营类型
-    private String hiringJobType; //招聘岗位类型
+//    private String hiringJobType; //招聘岗位类型
+
     private String enterpriceStatus; //公司运营状态
-    private String jpId; // 招聘岗位
-    private String emFinancing; // 融资情况融资情况
-    private String companyScaleList; // 公司规模
+//    private String jpId; // 招聘岗位
+    private String emFinancing; // 融资情况
 
-    @Override
-    public String toString() {
-        return "EnterpriseMessage{" +
-                "emid=" + emid +
-                ", emName='" + emName + '\'' +
-                ", emintroduce='" + emintroduce + '\'' +
-                ", emstablishmentDate='" + emstablishmentDate + '\'' +
-                ", emaddress='" + emaddress + '\'' +
-                ", emphone='" + emphone + '\'' +
-                ", ememail='" + ememail + '\'' +
-                ", emofficialWebsite='" + emofficialWebsite + '\'' +
-                ", emnum='" + emnum + '\'' +
-                ", businessScope='" + businessScope + '\'' +
-                ", hiringJobType='" + hiringJobType + '\'' +
-                ", enterpriceStatus='" + enterpriceStatus + '\'' +
-                ", jpId='" + jpId + '\'' +
-                ", emFinancing='" + emFinancing + '\'' +
-                ", companyScaleList='" + companyScaleList + '\'' +
-                '}';
-    }
+    private String emScaleList; // 公司规模
+//    private String emnum; //公司总人数
 
-    public String getCompanyScaleList() {
-        return companyScaleList;
-    }
-
-    public void setCompanyScaleList(String companyScaleList) {
-        this.companyScaleList = companyScaleList;
-    }
 
     public Integer getEmid() {
         return emid;
@@ -67,13 +41,13 @@ public class EnterpriseMessage {
         this.emName = emName;
     }
 
-//    public String getEmheadImage() {
-//        return emheadImage;
-//    }
-//
-//    public void setEmheadImage(String emheadImage) {
-//        this.emheadImage = emheadImage;
-//    }
+    public String getEmheadImage() {
+        return emheadImage;
+    }
+
+    public void setEmheadImage(String emheadImage) {
+        this.emheadImage = emheadImage;
+    }
 
     public String getEmintroduce() {
         return emintroduce;
@@ -123,28 +97,12 @@ public class EnterpriseMessage {
         this.emofficialWebsite = emofficialWebsite;
     }
 
-    public String getEmnum() {
-        return emnum;
-    }
-
-    public void setEmnum(String emnum) {
-        this.emnum = emnum;
-    }
-
     public String getBusinessScope() {
         return businessScope;
     }
 
     public void setBusinessScope(String businessScope) {
         this.businessScope = businessScope;
-    }
-
-    public String getHiringJobType() {
-        return hiringJobType;
-    }
-
-    public void setHiringJobType(String hiringJobType) {
-        this.hiringJobType = hiringJobType;
     }
 
     public String getEnterpriceStatus() {
@@ -155,19 +113,38 @@ public class EnterpriseMessage {
         this.enterpriceStatus = enterpriceStatus;
     }
 
-    public String getJpId() {
-        return jpId;
-    }
-
-    public void setJpId(String jpId) {
-        this.jpId = jpId;
-    }
-
     public String getEmFinancing() {
         return emFinancing;
     }
 
     public void setEmFinancing(String emFinancing) {
         this.emFinancing = emFinancing;
+    }
+
+    public String getEmScaleList() {
+        return emScaleList;
+    }
+
+    public void setEmScaleList(String emScaleList) {
+        this.emScaleList = emScaleList;
+    }
+
+    @Override
+    public String toString() {
+        return "EnterpriseMessage{" +
+                "emid=" + emid +
+                ", emName='" + emName + '\'' +
+                ", emheadImage='" + emheadImage + '\'' +
+                ", emintroduce='" + emintroduce + '\'' +
+                ", emstablishmentDate='" + emstablishmentDate + '\'' +
+                ", emaddress='" + emaddress + '\'' +
+                ", emphone='" + emphone + '\'' +
+                ", ememail='" + ememail + '\'' +
+                ", emofficialWebsite='" + emofficialWebsite + '\'' +
+                ", businessScope='" + businessScope + '\'' +
+                ", enterpriceStatus='" + enterpriceStatus + '\'' +
+                ", emFinancing='" + emFinancing + '\'' +
+                ", emScaleList='" + emScaleList + '\'' +
+                '}';
     }
 }

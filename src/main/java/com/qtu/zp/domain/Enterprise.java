@@ -10,13 +10,14 @@ public class Enterprise {
     private String epassword; //
     private String ecreateTime; //
     private String ephone; //
+    private String status; //账号状态
 
-    public Enterprise(Integer eid, String eName, String epassword, String ecreateTime, String ephone) {
-        this.eid = eid;
-        this.eName = eName;
-        this.epassword = epassword;
-        this.ecreateTime = ecreateTime;
-        this.ephone = ephone;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Integer getEid() {
@@ -67,6 +68,7 @@ public class Enterprise {
                 ", epassword='" + epassword + '\'' +
                 ", ecreateTime='" + ecreateTime + '\'' +
                 ", ephone='" + ephone + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

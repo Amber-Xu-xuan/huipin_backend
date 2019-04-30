@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qtu.zp.dao.CandidateMapper">
-    <!--<resultMap id="CandidateMessage" type="Candidate">-->
-        <!--<id column="cmid" property="cmid"/>-->
-        <!--<result column="sex" property="sex"/>-->
-        <!--<result column="headImage" property="sex"/>-->
-        <!--<result column="residenceAddress" property="residenceAddress"/>-->
-        <!--<result column="nowAddress" property="nowAddress"/>-->
-        <!--<result column="phone" property="phone"/>-->
-        <!--<result column="email" property="email"/>-->
-        <!--<result column="rId" property="rId"/>-->
-        <!--<result column="findJobStatus" property="findJobStatus"/>-->
-        <!--<result column="jiId" property="jiId"/>-->
-        <!--<result column="birthday" property="birthday"/>-->
-        <!--<result column="hobby" property="hobby"/>-->
-        <!--<result column="cusername" property="cusername"/>-->
-    <!--</resultMap>-->
+    <resultMap id="CandidateMessage" type="com.qtu.zp.domain.CandidateMessage">
+        <id column="cmid" property="cmid"/>
+        <result column="sex" property="sex"/>
+        <result column="headImage" property="sex"/>
+        <result column="residenceAddress" property="residenceAddress"/>
+        <result column="nowAddress" property="nowAddress"/>
+        <result column="phone" property="phone"/>
+        <result column="email" property="email"/>
+        <result column="rId" property="rId"/>
+        <result column="findJobStatus" property="findJobStatus"/>
+        <result column="jiId" property="jiId"/>
+        <result column="birthday" property="birthday"/>
+        <result column="hobby" property="hobby"/>
+        <result column="cusername" property="cusername"/>
+    </resultMap>
 
     <resultMap id="Candidate" type="com.qtu.zp.domain.Candidate">
         <id column="cid" property="cid"/>
@@ -39,39 +39,107 @@
     </select>
 
 
-    <!--&lt;!&ndash;注册求职者用户&ndash;&gt;-->
-    <!--<insert id="addCandidate" parameterType="Candidate">-->
+    <!--注册求职者用户-->
+    <insert id="addCandidate" parameterType="com.qtu.zp.domain.Candidate">
 
         <!--&lt;!&ndash; mysql插入数据后，获取id &ndash;&gt;-->
         <!--<selectKey keyProperty="cid" resultType="int" order="AFTER" >-->
             <!--SELECT LAST_INSERT_ID() as id-->
         <!--</selectKey>-->
 
-        <!--insert into candidate_login-->
-        <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
-            <!--<if test="cusername != null and cusername!=''">-->
-                <!--cusername,-->
-            <!--</if>-->
-            <!--<if test="cpassword != null and cpassword!=''">-->
-                <!--cpassword,-->
-            <!--</if>-->
-            <!--<if test="phone != null and phone!=''">-->
-                <!--phone-->
-            <!--</if>-->
+        insert into candidate_login
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cusername != null and cusername!=''">
+                cusername,
+            </if>
+            <if test="cpassword != null and cpassword!=''">
+                cpassword,
+            </if>
+            <if test="phone != null and phone!=''">
+                phone,
+            </if>
+            <if test="ccreateTime != null and ccreateTime!=''">
+                ccreateTime,
+            </if>
+            <if test="status != null and status!=''">
+                status
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cusername != null and cusername!=''">
+                #{cusername},
+            </if>
+            <if test="cpassword != null and cpassword!=''">
+                #{cpassword},
+            </if>
+            <if test="phone != null and phone!=''">
+                #{phone},
+            </if>
+            <if test="ccreateTime != null and ccreateTime!=''">
+                #{ccreateTime},
+            </if>
+            <if test="status != null and status!=''">
+                #{status}
+            </if>
+        </trim>
+    </insert>
 
-        <!--</trim>-->
-        <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
-            <!--<if test="cusername != null and cusername!=''">-->
-                <!--#{cusername},-->
-            <!--</if>-->
-            <!--<if test="cpassword != null and cpassword!=''">-->
-                <!--#{cpassword},-->
-            <!--</if>-->
-            <!--<if test="phone != null and phone!=''">-->
-                <!--#{phone}-->
-            <!--</if>-->
-        <!--</trim>-->
-    <!--</insert>-->
+    <!--添加求职者信息-->
+    <insert id="addCandidateMessage" parameterType="com.qtu.zp.domain.CandidateMessage">
+        insert into candidate_message
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cname != null and cname!=''">
+                cname,
+            </if>
+            <if test="introduce != null and introduce!=''">
+                introduce,
+            </if>
+            <if test="phone != null and phone!=''">
+                phone,
+            </if>
+            <if test="birthday != null and birthday!=''">
+                birthday,
+            </if>
+            <if test="sex != null and sex!=''">
+                sex,
+            </if>
+            <if test="address != null and address!=''">
+                address,
+            </if>
+            <if test="hobby != null and hobby!=''">
+                hobby,
+            </if>
+            <if test="email != null and email!=''">
+                email
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cname != null and cname!=''">
+                #{cname},
+            </if>
+            <if test="introduce != null and introduce!=''">
+                #{introduce},
+            </if>
+            <if test="phone != null and phone!=''">
+                #{phone},
+            </if>
+            <if test="birthday != null and birthday!=''">
+                #{birthday},
+            </if>
+            <if test="sex != null and sex!=''">
+                #{sex},
+            </if>
+            <if test="address != null and address!=''">
+                #{address},
+            </if>
+            <if test="hobby != null and hobby!=''">
+                #{hobby},
+            </if>
+            <if test="email != null and email!=''">
+                #{email}
+            </if>
+        </trim>
+    </insert>
 
     <!--&lt;!&ndash; 单条求职者数据删除 &ndash;&gt;-->
     <!--<delete id="deleteCandidate" parameterType="int">-->
