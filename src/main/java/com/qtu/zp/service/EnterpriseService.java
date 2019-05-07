@@ -17,8 +17,7 @@ public interface EnterpriseService {
     //     通过电话号码获取用户信息
     Enterprise findEnterpriseByPhone(String phone);
 
-    //    获取岗位信息(分页）
-    PageModel findJobListByEName(Integer pageCode, Integer pageSize, String eName);
+
 
     void registerEnterprise(Enterprise enterprise, EnterpriseMessage enterpriseMessage);
 

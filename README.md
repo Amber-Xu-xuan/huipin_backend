@@ -5,3 +5,6 @@
 测试环境
 
 IDEA + SpringBoot-2.1.3
+
+
+- fastJSON

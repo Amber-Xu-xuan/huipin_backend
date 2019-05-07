@@ -92,6 +92,7 @@ public class CandidateController {
     }
 
     //    注册求职者账号
+    @CrossOrigin
     @PostMapping(value = "/registerCandidate", produces = "application/json; charset=UTF-8")
     public Result registerCandidate(@RequestBody CandidateRegisterModel candidateRegisterModel, HttpServletRequest request, HttpServletResponse response) {
             if (candidateRegisterModel == null) {
@@ -104,6 +105,7 @@ public class CandidateController {
 
     }
 
+    @CrossOrigin
 //    首页通过筛选条件，返回工作列表
     @GetMapping(value = "/getJobListByFilterCondition",produces = "application/json; charset=UTF-8")
     public  Result getJobListByFilter(FilterConditionVo selectCondition,HttpServletRequest request, HttpServletResponse response){

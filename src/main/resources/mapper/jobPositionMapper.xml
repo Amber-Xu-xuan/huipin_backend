@@ -64,6 +64,14 @@
         WHERE j.eName = #{eName}
     </select>
 
+    <!--企业用户是否发布了同一个职位-->
+    <select id="getJobListByENameAndJName" resultMap="JobPosition">
+        SELECT *
+        FROM job_position j
+        WHERE j.eName = #{0}
+        AND  j.jName = #{1}
+    </select>
+
     <select id="getAllJobList" resultMap="JobPositionAndEnterprise">
         SELECT * FROM job_position j,enterprise_message e where e.emName = j.eName
     </select>
@@ -95,8 +103,8 @@
             <if test="workAddress != null and workAddress!=''">
                 workAddress,
             </if>
-            <if test="jType != null and jType!=''">
-                jType,
+            <if test="education != null and education!=''">
+                education,
             </if>
             <if test="jPublishDate != null and jPublishDate!=''">
                 jPublishDate,
@@ -105,7 +113,7 @@
                 eName,
             </if>
             <if test="jType != null and jType!=''">
-                jType,
+                jType
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -127,8 +135,8 @@
             <if test="workAddress != null and workAddress!=''">
                 #{workAddress},
             </if>
-            <if test="jType != null and jType!=''">
-                #{jType},
+            <if test="education != null and education!=''">
+                #{education},
             </if>
             <if test="jPublishDate != null and jPublishDate!=''">
                 #{jPublishDate},
@@ -137,14 +145,14 @@
                 #{eName},
             </if>
             <if test="jType != null and jType!=''">
-                #{jType},
+                #{jType}
             </if>
         </trim>
     </insert>
 
 
 
-    <!--通过条件筛选出相关岗位信息-->
+    <!--通过条件筛选出相关岗位信息,todo-->
     <!--JobPositonAndEnterprise-->
     <select id="getJobListByFilterCondition" parameterType="com.qtu.zp.Vo.FilterConditionVo" resultMap="JobPositionAndEnterprise">
         select *  from job_position j,enterprise_message e
@@ -174,5 +182,56 @@
          </if>  -->
     </select>
 
+    <!--修改职位信息-->
+    <!--更新工商信息-->
+    <update id="updateJobPosition" parameterType="com.qtu.zp.domain.JobPosition">
+        UPDATE business_information
+        <trim prefix="set" suffixOverrides=",">
+            <if test="jName != null and jName!=''">
+                jName=#{jName},
+            </if>
+            <if test="salary != null and salary!=''">
+                salary= #{salary},
+            </if>
+            <if test="experienceDuration != null and experienceDuration!=''">
+                experienceDuration= #{experienceDuration},
+            </if>
+            <if test="education != null and education!=''">
+                education= #{education},
+            </if>
+            <if test="obligation != null and obligation!=''">
+                obligation= #{obligation},
+            </if>
+            <if test="qualification != null and qualification!=''">
+                qualification=#{qualification},
+            </if>
+            <if test="workAddress != null and workAddress!=''">
+                workAddress= #{workAddress},
+            </if>
+            <if test="jType != null and jType!=''">
+                jType #{jType},
+            </if>
+
+            <if test="jPublishDate != null and jPublishDate!=''">
+                jPublishDate=  #{jPublishDate},
+            </if>
+            <if test="stopRecruitDate != null and stopRecruitDate!=''">
+                stopRecruitDate=#{stopRecruitDate},
+            </if>
+        </trim>
+    </update>
+
+    <delete id="deleteJobPosition" parameterType="java.lang.String">
+        delete from job_position where jpId = #{jpId}
+    </delete>
+
+    <!--批量删除-->
+    <delete id="deleteManyJobPositionByJpId"  parameterType = "java.util.List">
+        delete from job_position where 1>2
+            or id in
+        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+                 #{item}
+        </foreach>
+    </delete>
 
 </mapper>

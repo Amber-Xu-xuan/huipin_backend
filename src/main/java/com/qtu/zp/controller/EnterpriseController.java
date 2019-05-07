@@ -7,6 +7,7 @@ import com.qtu.zp.Vo.LoginModel;
 import com.qtu.zp.Vo.PageModel;
 import com.qtu.zp.domain.EnterpriseMessage;
 import com.qtu.zp.service.EnterpriseService;
+import com.qtu.zp.service.JobService;
 import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
 import org.springframework.validation.BindingResult;
@@ -28,6 +29,9 @@ public class EnterpriseController {
 
     @Resource
     private EnterpriseService enterpriseService;
+
+    @Resource
+    private JobService jobPositionService;
 
 
     @RequestMapping("/getAllEnterprise")
@@ -52,9 +56,9 @@ public class EnterpriseController {
         Enterprise enterprise = enterpriseService.findEnterpriseByPhone(user.getPhone());
         if (enterprise.getEpassword().equals(user.getPassword())) {
             session.setAttribute("enterprise", enterprise);
-            System.out.println("登录session的id是====" + session.getId());
+//            System.out.println("登录session的id是====" + session.getId());
 
-            return ResultFactory.buildSuccessResult("登陆成功。");
+            return ResultFactory.buildSuccessResult(enterprise);
         } else if (bindingResult.hasErrors()) {
             String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
             return ResultFactory.buildFailResult(message);
@@ -87,24 +91,18 @@ public class EnterpriseController {
      */
     @CrossOrigin
     @RequestMapping(value = "/enterprise/getJobListByEName", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public Result getJobListByEName(@RequestParam("pageCode") Integer pageCode, @RequestParam("pageSize") Integer pageSize, HttpServletRequest request, HttpServletResponse response) {
-        response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-
-        HttpSession session = request.getSession();
-        System.out.println("获取session的id是====" + session.getId());
-        Enterprise enterprise = (Enterprise) session.getAttribute("enterprise");
-        LoginModel user = (LoginModel) session.getAttribute("user");
-        System.out.println("从获取到的session储存信息" + enterprise.toString());
+    public Result getJobListByEName(@RequestParam("pageCode") Integer pageCode, @RequestParam("pageSize") Integer pageSize, @RequestParam("phone") String phone, HttpServletRequest request, HttpServletResponse response) {
 
 //        获取公司名称
-        if (enterprise == null) {
+        if (phone == null) {
             return ResultFactory.buildFailResult("请先登录您的企业账号");
         } else {
+            Enterprise enterprise = enterpriseService.findEnterpriseByPhone(phone);
             String eName = enterprise.geteName();
             if (eName == null) {
                 return ResultFactory.buildFailResult("请先完善您的企业信息");
             } else {
-                PageModel result = enterpriseService.findJobListByEName(pageCode, pageSize, eName);
+                PageModel result = jobPositionService.findJobListByEName(pageCode, pageSize, eName);
                 return ResultFactory.buildSuccessResult(result);
             }
 
@@ -137,6 +135,7 @@ public class EnterpriseController {
     }
 
 //    游客模式：获取公司的工商信息
+//    todo：时间转换
     @CrossOrigin
 //    @RequestMapping(value = "/getBusinessInformation", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @GetMapping(value = "/getBusinessInformation",produces = "application/json; charset=UTF-8")
@@ -150,6 +149,8 @@ public class EnterpriseController {
         }else {
             return ResultFactory.buildSuccessResult(businessInformation);
         }
+//        热门职位
     }
+
 
 }

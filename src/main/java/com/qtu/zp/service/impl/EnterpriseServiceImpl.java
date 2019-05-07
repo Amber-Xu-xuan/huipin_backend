@@ -27,8 +27,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     EnterpriseMapper enterpriseMapper;
 
 
-    @Resource
-    JobPositionMapper jobPositionMapper;
+
 
     @Resource
     BusinessInformationMapper businessInformationMapper;
@@ -41,16 +40,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Enterprise findEnterpriseByPhone(String ephone) {
         return enterpriseMapper.findEnterpriseByPhone(ephone);
-    }
-
-    @Override
-    public PageModel findJobListByEName(Integer pageCode,Integer pageSize,String eName) {
-        //使用Mybatis分页插件
-        PageHelper.startPage(pageCode,pageSize);
-
-        //调用分页查询方法，其实就是查询所有数据，mybatis自动帮我们进行分页计算
-        Page<JobPosition> page = jobPositionMapper.findJobListByEName(eName);
-        return new PageModel(page.getTotal(),page.getResult());
     }
 
     @Override

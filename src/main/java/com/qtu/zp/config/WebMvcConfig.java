@@ -48,10 +48,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginHandlerInterceptor())
+//        registry.addInterceptor(new LoginHandlerInterceptor())
 //                .addPathPatterns("/zp/enterpriseCenter");
-        .addPathPatterns("/zp/candidate/**","/zp/enterprise/**","/zp/manager")
-                .excludePathPatterns("/zp/candidate/login","/zp/enterprise/login","/zp/manager/login");
+//        .addPathPatterns("/zp/candidate/**","/zp/enterprise/**","/zp/manager")
+//                .excludePathPatterns("/zp/candidate/login","/zp/enterprise/login","/zp/manager/login");
     }
 
 

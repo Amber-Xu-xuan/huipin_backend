@@ -20,5 +20,13 @@ public interface JobPositionMapper {
     List<JobPositionAndEnterpriseMessage> getAllJobList();
     //    通过筛选获取所有岗位信息
     List<JobPositionAndEnterpriseMessage> getJobListByFilterCondition(FilterConditionVo selectCondition);
+    //    添加职位信息
+    void addJobPosition(JobPosition jobPosition);
     List<JobPosition> getJobListByFilter(String salary, String experience, String education, String financing, String companyScale);
+    //    删除职位信息
+    void deleteJobPosition(String jpId);
+    //    更新职位信息
+    void updateJobPosition(JobPosition jobPosition);
+// 企业用户是否发布了同一个职位
+    List<JobPosition> getJobListByENameAndJName(String eName,String jName);
 }

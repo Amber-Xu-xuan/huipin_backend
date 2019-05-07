@@ -66,11 +66,11 @@
         </dependency>
 
         <!--fastJSON-->
-        <!--<dependency>-->
-            <!--<groupId>com.alibaba</groupId>-->
-            <!--<artifactId>fastjson</artifactId>-->
-            <!--&lt;!&ndash;<version>1.2.35</version>&ndash;&gt;-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.49</version>
+        </dependency>
 
         <!--pageHelper分页-->
         <dependency>
