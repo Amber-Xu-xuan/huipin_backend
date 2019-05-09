@@ -71,4 +71,14 @@ public class JobServiceImpl implements JobService{
         jobPositionMapper.updateJobPosition(jobPosition);
     }
 
+    @Override
+    public PageModel getJobListByENameAndJName(Integer pageCode, Integer pageSize, String eName, String jName) {
+        //使用Mybatis分页插件
+        PageHelper.startPage(pageCode,pageSize);
+
+        //调用分页查询方法，其实就是查询所有数据，mybatis自动帮我们进行分页计算
+        Page<JobPosition> page = jobPositionMapper.getJobListByENameAndJName(eName,jName);
+        return new PageModel(page.getTotal(),page.getResult());
+    }
+
 }

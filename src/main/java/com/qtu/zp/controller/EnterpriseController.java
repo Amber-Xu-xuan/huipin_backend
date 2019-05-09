@@ -142,10 +142,10 @@ public class EnterpriseController {
     public Result getBusinessInformation(@RequestParam("eName") String eName,HttpServletRequest request, HttpServletResponse response){
         BusinessInformation businessInformation = enterpriseService.getBusinessInformation(eName);
         if(businessInformation == null){
-            return ResultFactory.buildFailResult("无法获取该公司的工商信息");
+            return ResultFactory.buildFailResult("由于该企业未进行认证，无法获取该公司的工商信息");
         }else if( businessInformation.getIsVerification().equals("否")){
 //            当该公司的工商信息没有获得验证时，不能显示改公司的工商信息
-            return ResultFactory.buildFailResult("由于改企业未进行认证，无法显示该公司的工商信息");
+            return ResultFactory.buildFailResult("由于该企业未进行认证，无法显示该公司的工商信息");
         }else {
             return ResultFactory.buildSuccessResult(businessInformation);
         }

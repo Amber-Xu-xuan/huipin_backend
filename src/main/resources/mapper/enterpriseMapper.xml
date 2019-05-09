@@ -21,7 +21,7 @@
         <result column="emphone" property="emphone"/>
         <result column="ememail" property="ememail"/>
         <result column="emofficialWebsite" property="emofficialWebsite"/>
-        <result column="businessScope" property="businessScope"/>
+        <!--<result column="businessScope" property="businessScope"/>-->
         <!--<result column="hiringJobType" property="hiringJobType"/>-->
         <result column="enterpriceStatus" property="enterpriceStatus"/>
         <result column="emFinancing" property="emFinancing"/>
@@ -54,9 +54,11 @@
         #{status,jdbcType=INTEGER})
     </insert>
 
+    <!--预埋,businessScope ,#{businessScope}-->
     <insert id="registerEnterpriseMessage" parameterType="com.qtu.zp.domain.EnterpriseMessage" >
-        insert into enterprise_message ( emName, emheadImage,emintroduce,emstablishmentDate,emaddress,emphone,ememail,emofficialWebsite,businessScope,enterpriceStatus,emFinancing,emScaleList)
-        values (#{emName}, #{emheadImage},#{emintroduce},#{emstablishmentDate},#{emaddress},#{emphone},#{ememail},#{emofficialWebsite},#{businessScope},#{enterpriceStatus},#{emFinancing},#{emScaleList})
+
+        insert into enterprise_message ( emName, emheadImage,emintroduce,emstablishmentDate,emaddress,emphone,ememail,emofficialWebsite,enterpriceStatus,emFinancing,emScaleList)
+        values (#{emName}, #{emheadImage},#{emintroduce},#{emstablishmentDate},#{emaddress},#{emphone},#{ememail},#{emofficialWebsite},#{enterpriceStatus},#{emFinancing},#{emScaleList})
     </insert>
 
 </mapper>

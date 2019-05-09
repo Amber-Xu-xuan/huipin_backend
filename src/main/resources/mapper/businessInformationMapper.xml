@@ -4,6 +4,7 @@
     <resultMap id="BusinessInformation" type="com.qtu.zp.domain.BusinessInformation">
         <id column="bId" property="bId"/>
         <result column="eName" property="eName"/>
+        <result column="eName" property="eFullName"/>
         <result column="legalRepresentative" property="legalRepresentative"/>
         <result column="registeredCapital" property="registeredCapital"/>
         <result column="establishmentTime" property="establishmentTime"/>
@@ -11,14 +12,14 @@
         <result column="managementState" property="managementState"/>
         <result column="registeredAddress" property="registeredAddress"/>
         <result column="unifiedCreditCode" property="unifiedCreditCode"/>
-        <result column="businessScope" property="businessScope"/>
+        <!--<result column="businessScope" property="businessScope"/>-->
         <result column="updateTime" property="updateTime"/>
         <result column="isVerification" property="isVerification"/>
         <result column="tianYanCha" property="tianYanCha"/>
     </resultMap>
 
     <!--企业用户获取到自己公司发布的岗位招聘信息-->
-    <select id="findBusinessInformationByEName" parameterType="java.lang.String" resultMap="BusinessInformation">
+    <select id="findBusinessInformationByEName" parameterType="java.lang.String" resultType="com.qtu.zp.domain.BusinessInformation">
         SELECT *
         FROM business_information j
         WHERE j.eName = #{eName}
@@ -34,6 +35,9 @@
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="eName != null and eName!=''">
                 eName,
+            </if>
+            <if test="eFullName != null and eFullName!=''">
+                eFullName,
             </if>
             <if test="legalRepresentative != null and legalRepresentative!=''">
                 legalRepresentative,
@@ -57,9 +61,9 @@
                 unifiedCreditCode,
             </if>
 
-            <if test="businessScope != null and businessScope!=''">
-                businessScope,
-            </if>
+            <!--<if test="businessScope != null and businessScope!=''">-->
+                <!--businessScope,-->
+            <!--</if>-->
             <if test="updateTime != null and updateTime!=''">
                 updateTime,
             </if>
@@ -73,6 +77,9 @@
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="eName != null and eName!=''">
                 #{eName},
+            </if>
+            <if test="eFullName != null and eFullName!=''">
+                #{eFullName},
             </if>
             <if test="legalRepresentative != null and legalRepresentative!=''">
                 #{legalRepresentative},
@@ -95,9 +102,9 @@
             <if test="unifiedCreditCode != null and unifiedCreditCode!=''">
                 #{unifiedCreditCode},
             </if>
-            <if test="businessScope != null and businessScope!=''">
-                #{businessScope},
-            </if>
+            <!--<if test="businessScope != null and businessScope!=''">-->
+                <!--#{businessScope},-->
+            <!--</if>-->
             <if test="updateTime != null and updateTime!=''">
                 #{updateTime},
             </if>
@@ -112,8 +119,8 @@
     <update id="updateBusinessInformation" parameterType="com.qtu.zp.domain.BusinessInformation">
         UPDATE business_information
         <trim prefix="set" suffixOverrides=",">
-            <if test="eName != null and eName!=''">
-                eName=#{eName},
+            <if test="eFullName != null and eFullName!=''">
+                eFullName=#{eFullName},
             </if>
             <if test="legalRepresentative != null and legalRepresentative!=''">
                 legalRepresentative= #{legalRepresentative},
@@ -137,9 +144,9 @@
                 unifiedCreditCode #{unifiedCreditCode},
             </if>
 
-            <if test="businessScope != null and businessScope!=''">
-                businessScope=  #{businessScope},
-            </if>
+            <!--<if test="businessScope != null and businessScope!=''">-->
+                <!--businessScope=  #{businessScope},-->
+            <!--</if>-->
             <if test="updateTime != null and updateTime!=''">
                 updateTime=#{updateTime},
             </if>
@@ -149,6 +156,8 @@
 
             isVerification="否"
         </trim>
+        where
+            eName=#{eName}
     </update>
 
 

@@ -14,7 +14,7 @@ public class EnterpriseMessage {
     private String emphone; //手机号
     private String ememail; //电子邮件
     private String emofficialWebsite; //公司官网
-    private String businessScope; //经营类型
+//    private String businessScope; //经营类型
 //    private String hiringJobType; //招聘岗位类型
 
     private String enterpriceStatus; //公司运营状态
@@ -97,13 +97,13 @@ public class EnterpriseMessage {
         this.emofficialWebsite = emofficialWebsite;
     }
 
-    public String getBusinessScope() {
-        return businessScope;
-    }
-
-    public void setBusinessScope(String businessScope) {
-        this.businessScope = businessScope;
-    }
+//    public String getBusinessScope() {
+//        return businessScope;
+//    }
+//
+//    public void setBusinessScope(String businessScope) {
+//        this.businessScope = businessScope;
+//    }
 
     public String getEnterpriceStatus() {
         return enterpriceStatus;
@@ -129,22 +129,4 @@ public class EnterpriseMessage {
         this.emScaleList = emScaleList;
     }
 
-    @Override
-    public String toString() {
-        return "EnterpriseMessage{" +
-                "emid=" + emid +
-                ", emName='" + emName + '\'' +
-                ", emheadImage='" + emheadImage + '\'' +
-                ", emintroduce='" + emintroduce + '\'' +
-                ", emstablishmentDate='" + emstablishmentDate + '\'' +
-                ", emaddress='" + emaddress + '\'' +
-                ", emphone='" + emphone + '\'' +
-                ", ememail='" + ememail + '\'' +
-                ", emofficialWebsite='" + emofficialWebsite + '\'' +
-                ", businessScope='" + businessScope + '\'' +
-                ", enterpriceStatus='" + enterpriceStatus + '\'' +
-                ", emFinancing='" + emFinancing + '\'' +
-                ", emScaleList='" + emScaleList + '\'' +
-                '}';
-    }
 }

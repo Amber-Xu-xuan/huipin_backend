@@ -19,15 +19,20 @@ public interface JobService {
     //    获取岗位信息(分页）
     PageModel findJobListByEName(Integer pageCode, Integer pageSize, String eName);
 
-//    添加职位信息
+    //    添加职位信息
     void addJobPosition(JobPosition jobPosition);
 
     List<JobPositionAndEnterpriseMessage> getAllJobList();
 
     //    通过筛选获取所有岗位信息
     List<JobPositionAndEnterpriseMessage> getJobListByFilterCondition(FilterConditionVo selectCondition);
-//    删除职位信息
+
+    //    删除职位信息
     void deleteJobPosition(String jpId);
-//    更新职位信息
+
+    //    更新职位信息
     void updateJobPosition(JobPosition jobPosition);
+
+    //    条件查询职位信息
+    PageModel getJobListByENameAndJName(Integer pageCode, Integer pageSize, String eName, String jName);
 }

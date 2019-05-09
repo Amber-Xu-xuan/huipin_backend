@@ -9,17 +9,26 @@ import java.sql.Date;
 public class BusinessInformation {
     private Integer bId;
     private String eName;
+    private String eFullName;
     private String legalRepresentative;
     private String registeredCapital;
-    private Date establishmentTime;
+    private String establishmentTime;
     private String enterprisesType;
     private String managementState;
     private String registeredAddress;
     private String unifiedCreditCode;
     private String businessScope;
-    private Date updateTime;
+    private String updateTime;
     private String isVerification;
     private String tianYanCha;
+
+    public String geteFullName() {
+        return eFullName;
+    }
+
+    public void seteFullName(String eFullName) {
+        this.eFullName = eFullName;
+    }
 
     public String getTianYanCha() {
         return tianYanCha;
@@ -61,14 +70,6 @@ public class BusinessInformation {
         this.registeredCapital = registeredCapital;
     }
 
-    public Date getEstablishmentTime() {
-        return establishmentTime;
-    }
-
-    public void setEstablishmentTime(Date establishmentTime) {
-        this.establishmentTime = establishmentTime;
-    }
-
     public String getEnterprisesType() {
         return enterprisesType;
     }
@@ -107,14 +108,6 @@ public class BusinessInformation {
 
     public void setBusinessScope(String businessScope) {
         this.businessScope = businessScope;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getIsVerification() {

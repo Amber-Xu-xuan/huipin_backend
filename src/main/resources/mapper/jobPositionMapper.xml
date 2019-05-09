@@ -40,7 +40,7 @@
         <result column="emphone" property="emphone"/>
         <result column="ememail" property="ememail"/>
         <result column="emnum" property="emnum"/>
-        <result column="businessScope" property="businessScope"/>
+        <!--<result column="businessScope" property="businessScope"/>-->
         <result column="enterpriceStatus" property="enterpriceStatus"/>
         <result column="emFinancing" property="emFinancing"/>
         <result column="emScaleList" property="emScaleList"/>
@@ -68,8 +68,8 @@
     <select id="getJobListByENameAndJName" resultMap="JobPosition">
         SELECT *
         FROM job_position j
-        WHERE j.eName = #{0}
-        AND  j.jName = #{1}
+        WHERE j.eName = #{arg0}
+        AND  j.jName like "%"#{arg1}"%"
     </select>
 
     <select id="getAllJobList" resultMap="JobPositionAndEnterprise">
@@ -185,7 +185,7 @@
     <!--修改职位信息-->
     <!--更新工商信息-->
     <update id="updateJobPosition" parameterType="com.qtu.zp.domain.JobPosition">
-        UPDATE business_information
+        UPDATE job_position
         <trim prefix="set" suffixOverrides=",">
             <if test="jName != null and jName!=''">
                 jName=#{jName},
@@ -209,7 +209,7 @@
                 workAddress= #{workAddress},
             </if>
             <if test="jType != null and jType!=''">
-                jType #{jType},
+                jType = #{jType},
             </if>
 
             <if test="jPublishDate != null and jPublishDate!=''">
@@ -219,6 +219,7 @@
                 stopRecruitDate=#{stopRecruitDate},
             </if>
         </trim>
+        WHERE jpId = #{jpId}
     </update>
 
     <delete id="deleteJobPosition" parameterType="java.lang.String">
