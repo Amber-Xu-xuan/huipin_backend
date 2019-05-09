@@ -10,6 +10,8 @@ import com.qtu.zp.service.EnterpriseService;
 import com.qtu.zp.service.JobService;
 import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,7 @@ import java.util.List;
  * @Author: AmberXu
  * @Date: 2019/4/11 21:46
  */
+@Api(value = "企业管理",tags = "企业管理")
 @RestController
 @RequestMapping(value = "/zp")
 public class EnterpriseController {
@@ -49,6 +52,7 @@ public class EnterpriseController {
      * @return 登录操作
      */
 
+    @ApiOperation("企业管理登陆")
     @CrossOrigin
     @RequestMapping(value = "/enterprise/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public Result login(@RequestBody LoginModel user, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
