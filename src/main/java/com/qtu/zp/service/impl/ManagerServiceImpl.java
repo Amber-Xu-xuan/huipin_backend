@@ -2,10 +2,12 @@ package com.qtu.zp.service.impl;
 
 import com.qtu.zp.dao.ManagerMapper;
 import com.qtu.zp.domain.Manager;
+import com.qtu.zp.domain.StatisticResult;
 import com.qtu.zp.service.ManagerService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author: AmberXu
@@ -20,6 +22,21 @@ public class ManagerServiceImpl implements ManagerService{
 
     @Override
     public Manager findManagerByPhone(String phone) {
-        return null;
+        return managerMapper.findManagerByPhone(phone);
+    }
+
+    @Override
+    public List<StatisticResult> StatisticCandidateNumByMonth() {
+        return managerMapper.StatisticCandidateNumByMonth();
+    }
+
+    @Override
+    public List<StatisticResult> StatisticEnterpriseNumByMonth() {
+        return managerMapper.StatisticEnterpriseNumByMonth();
+    }
+
+    @Override
+    public void updatePassword(String mphone, String mpassword) {
+        managerMapper.updatePassword(mphone,mpassword);
     }
 }

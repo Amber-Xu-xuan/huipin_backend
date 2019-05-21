@@ -12,7 +12,7 @@
         <result column="managementState" property="managementState"/>
         <result column="registeredAddress" property="registeredAddress"/>
         <result column="unifiedCreditCode" property="unifiedCreditCode"/>
-        <!--<result column="businessScope" property="businessScope"/>-->
+        <result column="businessScope" property="businessScope"/>
         <result column="updateTime" property="updateTime"/>
         <result column="isVerification" property="isVerification"/>
         <result column="tianYanCha" property="tianYanCha"/>
@@ -25,9 +25,9 @@
         WHERE j.eName = #{eName}
     </select>
 
-    <!--<select id="getAllBusinessInformation" resultMap="BusinessInformation">-->
-        <!--SELECT * FROM business_information j,enterprise_message e where e.emName = j.eName-->
-    <!--</select>-->
+    <select id="getBusinessInfoByIsVerification" resultType="com.qtu.zp.domain.BusinessInformation">
+        SELECT * FROM business_information j where j.isVerification!="通过验证"
+    </select>
 
     <!--添加工商信息-->
     <insert id="addBusinessInformation" parameterType="com.qtu.zp.domain.BusinessInformation">
@@ -61,9 +61,9 @@
                 unifiedCreditCode,
             </if>
 
-            <!--<if test="businessScope != null and businessScope!=''">-->
-                <!--businessScope,-->
-            <!--</if>-->
+            <if test="businessScope != null and businessScope!=''">
+                businessScope,
+            </if>
             <if test="updateTime != null and updateTime!=''">
                 updateTime,
             </if>
@@ -102,16 +102,16 @@
             <if test="unifiedCreditCode != null and unifiedCreditCode!=''">
                 #{unifiedCreditCode},
             </if>
-            <!--<if test="businessScope != null and businessScope!=''">-->
-                <!--#{businessScope},-->
-            <!--</if>-->
+            <if test="businessScope != null and businessScope!=''">
+                #{businessScope},
+            </if>
             <if test="updateTime != null and updateTime!=''">
                 #{updateTime},
             </if>
             <if test="tianYanCha != null and tianYanCha!=''">
                 #{tianYanCha},
             </if>
-            "否"
+            "未通过验证"
         </trim>
     </insert>
 
@@ -141,12 +141,12 @@
                 registeredAddress= #{registeredAddress},
             </if>
             <if test="unifiedCreditCode != null and unifiedCreditCode!=''">
-                unifiedCreditCode #{unifiedCreditCode},
+                unifiedCreditCode= #{unifiedCreditCode},
             </if>
 
-            <!--<if test="businessScope != null and businessScope!=''">-->
-                <!--businessScope=  #{businessScope},-->
-            <!--</if>-->
+            <if test="businessScope != null and businessScope!=''">
+                businessScope=  #{businessScope},
+            </if>
             <if test="updateTime != null and updateTime!=''">
                 updateTime=#{updateTime},
             </if>
@@ -154,7 +154,7 @@
                 tianYanCha=#{tianYanCha},
             </if>
 
-            isVerification="否"
+            isVerification="未通过验证"
         </trim>
         where
             eName=#{eName}
@@ -162,5 +162,13 @@
 
 
 
+    <update id="editBusinessInfoIsVerificationByBId" parameterType="java.lang.String">
+    UPDATE business_information SET isVerification="通过验证" where bId = #{bId}
+    </update>
 
+
+
+    <update id="editBusinessInfoNotifyInfoByBId">
+        UPDATE business_information SET isVerification=#{arg1} where bId = #{arg0}
+    </update>
 </mapper>

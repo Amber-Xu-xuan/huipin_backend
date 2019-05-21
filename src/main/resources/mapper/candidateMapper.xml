@@ -4,17 +4,17 @@
     <resultMap id="CandidateMessage" type="com.qtu.zp.domain.CandidateMessage">
         <id column="cmid" property="cmid"/>
         <result column="sex" property="sex"/>
-        <result column="headImage" property="sex"/>
+        <result column="headImage" property="headImage"/>
         <result column="residenceAddress" property="residenceAddress"/>
         <result column="nowAddress" property="nowAddress"/>
         <result column="phone" property="phone"/>
         <result column="email" property="email"/>
-        <result column="rId" property="rId"/>
         <result column="findJobStatus" property="findJobStatus"/>
-        <result column="jiId" property="jiId"/>
         <result column="birthday" property="birthday"/>
         <result column="hobby" property="hobby"/>
-        <result column="cusername" property="cusername"/>
+        <result column="crname" property="crname"/>
+        <result column="isStudent" property="isStudent"/>
+        <result column="introduce" property="introduce"/>
     </resultMap>
 
     <resultMap id="Candidate" type="com.qtu.zp.domain.Candidate">
@@ -31,6 +31,13 @@
     <select id="findCandidateByPhone" parameterType="java.lang.String" resultMap="Candidate">
         SELECT *
         FROM candidate_login a
+        WHERE a.phone = #{phone}
+    </select>
+
+    <!--通过账号获取求职者信息-->
+    <select id="getCandidateMessageByPhone" parameterType="java.lang.String" resultType="com.qtu.zp.domain.CandidateMessage">
+        SELECT *
+        FROM candidate_message a
         WHERE a.phone = #{phone}
     </select>
 
@@ -88,8 +95,8 @@
     <insert id="addCandidateMessage" parameterType="com.qtu.zp.domain.CandidateMessage">
         insert into candidate_message
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="cname != null and cname!=''">
-                cname,
+            <if test="crname != null and crname!=''">
+                crname,
             </if>
             <if test="introduce != null and introduce!=''">
                 introduce,
@@ -103,8 +110,11 @@
             <if test="sex != null and sex!=''">
                 sex,
             </if>
-            <if test="address != null and address!=''">
-                address,
+            <if test="residenceAddress != null and residenceAddress!=''">
+                residenceAddress,
+            </if>
+            <if test="nowAddress != null and nowAddress!=''">
+                nowAddress,
             </if>
             <if test="hobby != null and hobby!=''">
                 hobby,
@@ -112,10 +122,13 @@
             <if test="email != null and email!=''">
                 email
             </if>
+            <if test="isStudent != null and isStudent!=''">
+                isStudent
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="cname != null and cname!=''">
-                #{cname},
+            <if test="crname != null and crname!=''">
+                #{crname},
             </if>
             <if test="introduce != null and introduce!=''">
                 #{introduce},
@@ -129,14 +142,20 @@
             <if test="sex != null and sex!=''">
                 #{sex},
             </if>
-            <if test="address != null and address!=''">
-                #{address},
+            <if test="residenceAddress != null and residenceAddress!=''">
+                #{residenceAddress},
+            </if>
+            <if test="nowAddress != null and nowAddress!=''">
+                #{nowAddress},
             </if>
             <if test="hobby != null and hobby!=''">
                 #{hobby},
             </if>
             <if test="email != null and email!=''">
                 #{email}
+            </if>
+            <if test="isStudent != null and isStudent!=''">
+                #{isStudent}
             </if>
         </trim>
     </insert>
@@ -146,16 +165,68 @@
         <!--delete from candidate_login where cid=#{cid}-->
     <!--</delete>-->
 
-    <!--&lt;!&ndash;修改密码&ndash;&gt;-->
-    <!--<update id="updatePassword" parameterType="java.lang.String">-->
-        <!--update candidate_login-->
-        <!--<set>-->
-            <!--<if test="cpassword != null and cpassword!=''">-->
-                <!--cpassword = #{cpassword},-->
-            <!--</if>-->
-        <!--</set>-->
-        <!--where cid = #{cid}-->
-    <!--</update>-->
+    <!--修改密码-->
+    <update id="updatePassword" parameterType="java.lang.String">
+        update candidate_login
+        <set>
+            <if test="cpassword != null and cpassword!=''">
+                cpassword = #{arg1},
+            </if>
+        </set>
+        where ephone=#{arg0}
+    </update>
+
+    <!--修改简介-->
+    <update id="updateIntroduce">
+        update candidate_message set introduce = #{arg1}
+        where  phone=#{arg0}
+    </update>
+
+    <!--修改求职者信息-->
+    <update id="updateCandidateBaseInfo" parameterType="com.qtu.zp.domain.CandidateMessage">
+        UPDATE candidate_message
+        <trim prefix="set" suffixOverrides=",">
+            <if test="crname != null and crname!=''">
+                crname=#{crname},
+            </if>
+            <if test="headImage != null and headImage!=''">
+                headImage= #{headImage},
+            </if>
+            <if test="introduce != null and introduce!=''">
+                introduce= #{introduce},
+            </if>
+            <if test="birthday != null and birthday!=''">
+                birthday= #{birthday},
+            </if>
+            <if test="sex != null and sex!=''">
+                sex= #{sex},
+            </if>
+            <if test="residenceAddress != null and residenceAddress!=''">
+                residenceAddress= #{residenceAddress},
+            </if>
+            <if test="nowAddress != null and nowAddress!=''">
+                nowAddress= #{nowAddress},
+            </if>
+            <if test="hobby != null and hobby!=''">
+                hobby= #{hobby},
+            </if>
+            <if test="email != null and email!=''">
+                email= #{email},
+            </if>
+
+            <if test="isStudent != null and isStudent!=''">
+                isStudent= #{isStudent},
+            </if>
+            <if test="findJobStatus != null and findJobStatus!=''">
+                findJobStatus= #{findJobStatus},
+            </if>
+        </trim>
+        WHERE
+        <if test="phone != null and phone!=''">
+            phone= #{phone}
+        </if>
+    </update>
+
 
 
 </mapper>

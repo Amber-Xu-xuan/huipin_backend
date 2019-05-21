@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.ProjectExperienceMapper">
+
+    <insert id="addProjectExperience" parameterType="com.qtu.zp.domain.ProjectExperience">
+        insert into project_experience
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="projectName != null and projectName!=''">
+                projectName,
+            </if>
+            <if test="company != null and company!=''">
+                company,
+            </if>
+            <if test="startTime != null and startTime!=''">
+                startTime,
+            </if>
+            <if test="endTime != null and endTime!=''">
+                endTime,
+            </if>
+            <if test="phone != null and phone!=''">
+                phone,
+            </if>
+            <if test="projectLink != null and projectLink!=''">
+                projectLink,
+            </if>
+            <if test="projectDescribe != null and projectDescribe!=''">
+                projectDescribe,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="projectName != null and projectName!=''">
+                #{projectName},
+            </if>
+            <if test="company != null and company!=''">
+                #{company},
+            </if>
+
+            <if test="startTime != null and startTime!=''">
+                #{startTime},
+            </if>
+            <if test="endTime != null and endTime!=''">
+                #{endTime},
+            </if>
+            <if test="phone != null and phone!=''">
+                #{phone},
+            </if>
+            <if test="projectLink != null and projectLink!=''">
+                #{projectLink},
+            </if>
+            <if test="projectDescribe != null and projectDescribe!=''">
+                #{projectDescribe},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="getProjectExperienceByPhone" resultType="com.qtu.zp.domain.ProjectExperience">
+        SELECT * FROM project_experience WHERE phone=#{arg0}
+    </select>
+
+    <select id="findProjectExperienceByPhone" resultType="com.qtu.zp.domain.ProjectExperience">
+        SELECT * FROM project_experience WHERE phone=#{arg0}
+    </select>
+
+    <select id="findProjectExperienceByProjectNameAndPhone" resultType="com.qtu.zp.domain.ProjectExperience">
+        SELECT * FROM project_experience WHERE phone=#{arg0} AND projectName like "%"#{arg1}"%"
+    </select>
+
+    <!--修改社交主页信息-->
+    <update id="updateProjectExperience" parameterType="com.qtu.zp.domain.ProjectExperience">
+        UPDATE project_experience
+        <trim prefix="set" suffixOverrides=",">
+            <if test="projectName != null and projectName!=''">
+                projectName=#{projectName},
+            </if>
+            <if test="company != null and company!=''">
+                company= #{company},
+            </if>
+            <if test="startTime != null and startTime!=''">
+                startTime= #{startTime},
+            </if>
+            <if test="endTime != null and endTime!=''">
+                endTime=#{endTime},
+            </if>
+            <if test="phone != null and phone!=''">
+                phone= #{phone},
+            </if>
+            <if test="projectLink != null and projectLink!=''">
+                projectLink=#{projectLink},
+            </if>
+            <if test="projectDescribe != null and projectDescribe!=''">
+                projectDescribe= #{projectDescribe},
+            </if>
+        </trim>
+        where peId =#{peId}
+    </update>
+
+    <delete id="deleteProjectExperience" parameterType="java.lang.String">
+        delete from project_experience where peId = #{peId}
+    </delete>
+</mapper>

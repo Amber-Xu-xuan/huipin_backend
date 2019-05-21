@@ -3,10 +3,12 @@ package com.qtu.zp.controller;
 import com.qtu.zp.Vo.CandidateRegisterModel;
 import com.qtu.zp.Vo.FilterConditionVo;
 import com.qtu.zp.domain.Candidate;
+import com.qtu.zp.domain.CandidateMessage;
 import com.qtu.zp.domain.JobPosition;
 import com.qtu.zp.Vo.LoginModel;
 import com.qtu.zp.domain.JobPositionAndEnterpriseMessage;
 import com.qtu.zp.service.CandidateService;
+import com.qtu.zp.service.CollectionService;
 import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
 import org.springframework.validation.BindingResult;
@@ -39,10 +41,14 @@ public class CandidateController {
     @Resource
     private CandidateService candidateService;
 
+    @Resource
+    private CollectionService collectionService;
+
     @CrossOrigin
     @RequestMapping("/getAllCandidate")
     public List<Candidate> getAllCandidate() {
 
+//        b.isVerification!="未通过验证"
         List<Candidate> candidates = candidateService.getAllCandidate();
         return candidates;
     }
@@ -52,6 +58,9 @@ public class CandidateController {
     @RequestMapping(value = "/candidate/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public Result login(@RequestBody LoginModel user, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
         Candidate candidate = candidateService.findCandidateByPhone(user.getPhone());
+        if(candidate == null){
+            return ResultFactory.buildFailResult("账号错误，该用户不存在");
+        }
         if (candidate.getCpassword().equals(user.getPassword())) {
             request.getSession().setAttribute("candidateInfo", candidate);
             return ResultFactory.buildSuccessResult(candidate);
@@ -95,6 +104,7 @@ public class CandidateController {
     @CrossOrigin
     @PostMapping(value = "/registerCandidate", produces = "application/json; charset=UTF-8")
     public Result registerCandidate(@RequestBody CandidateRegisterModel candidateRegisterModel, HttpServletRequest request, HttpServletResponse response) {
+//        在数据库中查询是否有对应的数据重复注册，作出提示
             if (candidateRegisterModel == null) {
             return ResultFactory.buildFailResult("请重新注册");
         } else {
@@ -120,40 +130,51 @@ public class CandidateController {
 //        return  null;
     }
 
-// 17606050420@qq.com
+    @CrossOrigin
+    @PostMapping(value = "/candidate/updatePassword",produces = "application/json; charset=UTF-8")
+    public Result updatePassword(@RequestBody Candidate candidate){
+        candidateService.updatePassword(candidate.getPhone(),candidate.getCpassword());
+        return ResultFactory.buildSuccessResult("密码修改成功");
+    }
 
-//    @RequestMapping(value="/", method=RequestMethod.POST)
-//    public String postCandidate(@ModelAttribute Candidate candidate) {
-//        // 处理"/Candidates/"的POST请求，用来创建Candidate
-//        // 除了@ModelAttribute绑定参数之外，还可以通过@RequestParam从页面中传递参数
-//        Candidates.put(candidate.getCid().longValue(), candidate);
-//        return "success";
-//    }
-//
-//    @RequestMapping(value="/{id}", method=RequestMethod.GET)
-//    public Candidate getCandidate(@PathVariable Long id) {
-//        // 处理"/Candidates/{id}"的GET请求，用来获取url中id值的Candidate信息
-//        // url中的id可通过@PathVariable绑定到函数的参数中
-//        return Candidates.get(id);
-//    }
-//
-//    @RequestMapping(value="/{id}", method=RequestMethod.PUT)
-//    public String putCandidate(@PathVariable Long id, @ModelAttribute Candidate candidate) {
-//        // 处理"/Candidates/{id}"的PUT请求，用来更新Candidate信息
-//        Candidate u = Candidates.get(id);
-//        CandidateMessage cmold = candidate.getCandidate_message();
-//        CandidateMessage cmnew = u.getCandidate_message();
-//        u.setcName(candidate.getcName());
-//        cmnew.setHeadImage(cmold.getHeadImage());
-//        u.setCandidate_message(cmnew);
-//        Candidates.put(id, u);
-//        return "success";
-//    }
-//
-//    @RequestMapping(value="", method=RequestMethod.DELETE)
-//    public String deleteCandidate(@PathVariable Long id) {
-//        // 处理"/Candidates/{id}"的DELETE请求，用来删除Candidate
-//        Candidates.remove(id);
-//        return "success";
-//    }
+
+    //    修改自我描述
+    @CrossOrigin
+    @PostMapping(value = "/candidate/editSelfDescription", produces = "application/json; charset=UTF-8")
+    public Result editSelfDescription(@RequestBody CandidateMessage candidateMessage) {
+        if (candidateMessage.getPhone() == null) {
+            return ResultFactory.buildFailResult("请重新登录");
+        } else {
+            candidateService.updateIntroduce(candidateMessage.getPhone(),candidateMessage.getIntroduce());
+            String message = String.format("修改成功。");
+            return ResultFactory.buildSuccessResult(message);
+        }
+    }
+
+    //    修改基础信息
+    @CrossOrigin
+    @PostMapping(value = "/candidate/editCandidateBaseInfo", produces = "application/json; charset=UTF-8")
+    public Result editCandidateBaseInfo(@RequestBody CandidateMessage candidateMessage) {
+        if (candidateMessage.getPhone() == null) {
+            return ResultFactory.buildFailResult("请重新登录");
+        } else {
+            candidateService.updateCandidateBaseInfo(candidateMessage);
+            String message = String.format("修改成功。");
+            return ResultFactory.buildSuccessResult(message);
+        }
+    }
+
+
+    @CrossOrigin
+    @PostMapping(value = "/candidate/getCandidateMessageByPhone", produces = "application/json; charset=UTF-8")
+    public Result getCandidateMessageByPhone(@RequestBody CandidateMessage candidateMessage) {
+        if (candidateMessage.getPhone() == null) {
+            return ResultFactory.buildFailResult("请重新登录");
+        } else {
+            List<CandidateMessage> candidateMessagesList = candidateService.getCandidateMessageByPhone(candidateMessage.getPhone());
+            return ResultFactory.buildSuccessResult(candidateMessagesList);
+        }
+    }
+
+// 17606050420@qq.com
 }

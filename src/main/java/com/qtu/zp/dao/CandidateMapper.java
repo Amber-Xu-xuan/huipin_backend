@@ -17,6 +17,19 @@ public interface CandidateMapper {
 //     通过电话号码获取用户信息
     Candidate findCandidateByPhone(String phone);
 
+//    修改密码
+    void updatePassword(String phone,String cpassword);
+
+    void updateIntroduce(String phone,String introduce);
+
+    List<CandidateMessage> getCandidateMessageByPhone(String phone);
+
+    void updateCandidate(Candidate candidate);
+
+    void updateCandidateMessage(CandidateMessage candidateMessage);
+
+//    修改求职者信息
+    void updateCandidateBaseInfo(CandidateMessage candidateMessage);
 
 //    注册求职者
     void addCandidate(Candidate candidate);

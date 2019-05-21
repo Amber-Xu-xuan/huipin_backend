@@ -16,7 +16,7 @@ public interface BusinessInformationService {
     PageModel findBusinessInformationByEName(Integer pageCode, Integer pageSize, String eName);
 
     //    添加工商信息
-    void addBusinessInformation(BusinessInformation jobPosition);
+    void addBusinessInformation(BusinessInformation businessInformation);
 
     List<BusinessInformation> getAllBusinessInformation();
 
@@ -31,4 +31,11 @@ public interface BusinessInformationService {
 
     //    条件查询工商信息
 //    PageModel getBusinessInformationByENameAndJName(Integer pageCode, Integer pageSize, String eName, String jName);
+
+//    管理员模块：查询所有未通过验证的公司信息
+    PageModel getBusinessInfoByIsVerification(Integer pageCode, Integer pageSize,String phone);
+//    修改通过
+    void editBusinessInfoIsVerificationByBId(String bId);
+//    修改IsVerification字段，存放未通过验证的信息
+    void editBusinessInfoNotifyInfoByBId(String bId,String info);
 }

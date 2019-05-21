@@ -8,7 +8,9 @@ import java.sql.Date;
  */
 public class BusinessInformation {
     private Integer bId;
+
     private String eName;
+    private String ePhone;
     private String eFullName;
     private String legalRepresentative;
     private String registeredCapital;
@@ -21,6 +23,30 @@ public class BusinessInformation {
     private String updateTime;
     private String isVerification;
     private String tianYanCha;
+
+    public String getePhone() {
+        return ePhone;
+    }
+
+    public void setePhone(String ePhone) {
+        this.ePhone = ePhone;
+    }
+
+    public String getEstablishmentTime() {
+        return establishmentTime;
+    }
+
+    public void setEstablishmentTime(String establishmentTime) {
+        this.establishmentTime = establishmentTime;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
+    }
 
     public String geteFullName() {
         return eFullName;

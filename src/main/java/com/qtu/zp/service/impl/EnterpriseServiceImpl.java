@@ -43,6 +43,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
+    public void updatePassword(String ephone, String epassword) {
+        enterpriseMapper.updatePassword(ephone,epassword);
+    }
+
+    @Override
     public void registerEnterprise(Enterprise enterprise, EnterpriseMessage enterpriseMessage) {
         enterpriseMapper.registerEnterprise(enterprise);
         enterpriseMapper.registerEnterpriseMessage(enterpriseMessage);
@@ -57,6 +62,16 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public BusinessInformation getBusinessInformation(String eName) {
         return businessInformationMapper.findBusinessInformationByEName(eName);
+    }
+
+    @Override
+    public void updateEnterprise(Enterprise enterprise) {
+        enterpriseMapper.updateEnterprise(enterprise);
+    }
+
+    @Override
+    public void updateEnterpriseMessage(EnterpriseMessage enterpriseMessage) {
+        enterpriseMapper.updateEnterpriseMessage(enterpriseMessage);
     }
 
 }

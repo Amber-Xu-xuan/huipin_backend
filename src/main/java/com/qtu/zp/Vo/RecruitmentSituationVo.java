@@ -1,25 +1,21 @@
 package com.qtu.zp.Vo;
 
+import java.util.List;
+
 /**
  * @Author: AmberXu
- * @Date: 2019/5/9 2:09
+ * @Date: 2019/5/12 18:02
  */
 public class RecruitmentSituationVo {
-
-    private Integer rsId;
     private String phone;
-    private String jName;
-    private String eName;
-    private String date;
-    private String status;
-
-    public Integer getRsId() {
-        return rsId;
-    }
-
-    public void setRsId(Integer rsId) {
-        this.rsId = rsId;
-    }
+    private String educationBackground;
+    private String major;
+    private String graduationTime;
+    private String havaWorkExperience;
+    private List<Integer> weId;
+    private String havaProjectExperience;
+    private List<Integer> peId;
+    private String socialHomePage;
 
     public String getPhone() {
         return phone;
@@ -29,35 +25,68 @@ public class RecruitmentSituationVo {
         this.phone = phone;
     }
 
-    public String getjName() {
-        return jName;
+    public String getEducationBackground() {
+        return educationBackground;
     }
 
-    public void setjName(String jName) {
-        this.jName = jName;
+    public void setEducationBackground(String educationBackground) {
+        this.educationBackground = educationBackground;
     }
 
-    public String geteName() {
-        return eName;
+    public String getMajor() {
+        return major;
     }
 
-    public void seteName(String eName) {
-        this.eName = eName;
+    public void setMajor(String major) {
+        this.major = major;
     }
 
-    public String getDate() {
-        return date;
+    public String getGraduationTime() {
+        return graduationTime;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setGraduationTime(String graduationTime) {
+        this.graduationTime = graduationTime;
     }
 
-    public String getStatus() {
-        return status;
+    public String getHavaWorkExperience() {
+        return havaWorkExperience;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setHavaWorkExperience(String havaWorkExperience) {
+        this.havaWorkExperience = havaWorkExperience;
+    }
+
+    public String getHavaProjectExperience() {
+        return havaProjectExperience;
+    }
+
+    public void setHavaProjectExperience(String havaProjectExperience) {
+        this.havaProjectExperience = havaProjectExperience;
+    }
+
+
+    public String getSocialHomePage() {
+        return socialHomePage;
+    }
+
+    public void setSocialHomePage(String socialHomePage) {
+        this.socialHomePage = socialHomePage;
+    }
+
+    public List<Integer> getWeId() {
+        return weId;
+    }
+
+    public void setWeId(List<Integer> weId) {
+        this.weId = weId;
+    }
+
+    public List<Integer> getPeId() {
+        return peId;
+    }
+
+    public void setPeId(List<Integer> peId) {
+        this.peId = peId;
     }
 }

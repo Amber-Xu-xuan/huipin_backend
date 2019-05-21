@@ -81,4 +81,9 @@ public class JobServiceImpl implements JobService{
         return new PageModel(page.getTotal(),page.getResult());
     }
 
+    @Override
+    public List<JobPositionAndEnterpriseMessage> selectHotJobPosition() {
+        return jobPositionMapper.selectHotJobPosition();
+    }
+
 }

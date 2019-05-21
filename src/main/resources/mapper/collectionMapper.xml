@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.CollectionMapper">
+
+    <select id="getCollectionByPhone" parameterType="java.lang.String" resultType="com.qtu.zp.domain.Collection">
+        SELECT *
+        FROM collection r
+        WHERE r.cphone = #{cphone}
+    </select>
+
+    
+    <select id="findCollectionByPhoneAndEName" resultType="com.qtu.zp.domain.Collection">
+        SELECT * FROM collection j where j.cphone = #{arg0} AND  j.eName =#{arg1}
+    </select>
+
+
+    <select id="findCollectionByPhoneAndjpId" resultType="com.qtu.zp.domain.Collection">
+        SELECT * FROM collection j where j.cphone = #{arg0} AND  j.jpId =#{arg1}
+    </select>
+    <!--通过手机账号查找收藏职位-->
+    <select id="getCollectJobPositionByPhone" resultType="com.qtu.zp.domain.JobPosition" parameterType="java.lang.String">
+        SELECT j.* FROM collection c,job_position j where c.cphone = #{phone} AND c.jpId=j.jpId
+    </select>
+
+
+    <insert id="addCollection" parameterType="com.qtu.zp.domain.Collection">
+        insert into collection
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cphone != null and cphone!=''">
+                cphone,
+            </if>
+            <if test="jpId != null and jpId!=''">
+                jpId,
+            </if>
+            <if test="jName != null and jName!=''">
+                jName,
+            </if>
+            <if test="eName != null and eName!=''">
+                eName,
+            </if>
+            <if test="collectTime != null and collectTime!=''">
+                collectTime,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cphone != null and cphone!=''">
+                #{cphone},
+            </if>
+            <if test="jpId != null and jpId!=''">
+                #{jpId},
+            </if>
+            <if test="jName != null and jName!=''">
+                #{jName},
+            </if>
+            <if test="eName != null and eName!=''">
+                #{eName},
+            </if>
+            <if test="collectTime != null and collectTime!=''">
+                #{collectTime},
+            </if>
+        </trim>
+    </insert>
+    <!--修改社交主页信息-->
+    <update id="updateCollection" parameterType="com.qtu.zp.domain.Collection">
+        UPDATE  collection
+        <trim prefix="set" suffixOverrides=",">
+            <if test="cphone != null and cphone!=''">
+                cphone=#{cphone},
+            </if>
+            <if test="jName != null and jName!=''">
+                jName= #{jName},
+            </if>
+            <if test="jpId != null and jpId!=''">
+                jpId=#{jpId},
+            </if>
+            <if test="eName != null and eName!=''">
+                eName= #{eName},
+            </if>
+            <if test="collectTime != null and collectTime!=''">
+                collectTime=#{collectTime},
+            </if>
+        </trim>
+        where id =#{id}
+    </update>
+
+    <delete id="deleteCollection">
+        delete from  collection where cphone = #{arg0} AND jpId=#{arg1}
+    </delete>
+
+</mapper>

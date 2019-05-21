@@ -4,12 +4,13 @@ package com.qtu.zp.Vo;
  * @Author: AmberXu
  * @Date: 2019/5/8 13:23
  */
+// 教育经历筛选、
 public class SelectResumeConditionVo {
-    Integer pageCode;
-    Integer pageSize;
-    String phone;
-    String educationBackground;
-    String major;
+    private Integer pageCode;
+    private Integer pageSize;
+    private String phone;
+    private String educationBackground;
+    private String major;
 
     public Integer getPageCode() {
         return pageCode;

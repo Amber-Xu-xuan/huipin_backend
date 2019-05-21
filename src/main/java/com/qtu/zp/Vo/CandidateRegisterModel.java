@@ -8,8 +8,8 @@ import com.qtu.zp.domain.CandidateMessage;
  * @Date: 2019/4/22 23:18
  */
 public class CandidateRegisterModel {
-    Candidate candidate;
-    CandidateMessage candidateMessage;
+    private Candidate candidate;
+    private CandidateMessage candidateMessage;
     public Candidate getCandidate() {
         return candidate;
     }

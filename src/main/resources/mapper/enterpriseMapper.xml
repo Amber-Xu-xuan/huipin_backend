@@ -61,4 +61,81 @@
         values (#{emName}, #{emheadImage},#{emintroduce},#{emstablishmentDate},#{emaddress},#{emphone},#{ememail},#{emofficialWebsite},#{enterpriceStatus},#{emFinancing},#{emScaleList})
     </insert>
 
+    <!--更新Enterprise-->
+    <update id="updateEnterprise" parameterType="com.qtu.zp.domain.Enterprise">
+        UPDATE enterprise_login
+        <trim prefix="set" suffixOverrides=",">
+            <if test="eName != null and eName!=''">
+                eName=#{eName},
+            </if>
+            <if test="epassword != null and epassword!=''">
+                epassword= #{epassword},
+            </if>
+            <if test="ecreateTime != null and ecreateTime!=''">
+                ecreateTime= #{ecreateTime},
+            </if>
+            <if test="status != null and status!=''">
+                status= #{status},
+            </if>
+        </trim>
+        WHERE
+        <if test="ephone != null and ephone!=''">
+            ephone= #{ephone}
+        </if>
+    </update>
+
+    <update id="updateEnterpriseMessage" parameterType="com.qtu.zp.domain.EnterpriseMessage">
+        UPDATE enterprise_message
+        <trim prefix="set" suffixOverrides=",">
+            <if test="emName != null and emName!=''">
+                emName=#{emName},
+            </if>
+            <if test="emheadImage != null and emheadImage!=''">
+                emheadImage= #{emheadImage},
+            </if>
+            <if test="emintroduce != null and emintroduce!=''">
+                emintroduce= #{emintroduce},
+            </if>
+            <if test="emstablishmentDate != null and emstablishmentDate!=''">
+                emstablishmentDate= #{emstablishmentDate},
+            </if>
+            <if test="emaddress != null and emaddress!=''">
+                emaddress= #{emaddress},
+            </if>
+            <if test="ememail != null and ememail!=''">
+                ememail= #{ememail},
+            </if>
+            <if test="emofficialWebsite != null and emofficialWebsite!=''">
+                emofficialWebsite= #{emofficialWebsite},
+            </if>
+            <if test="enterpriceStatus != null and enterpriceStatus!=''">
+                enterpriceStatus= #{enterpriceStatus},
+            </if>
+            <if test="emFinancing != null and emFinancing!=''">
+                emFinancing= #{emFinancing},
+            </if>
+            <if test="emScaleList != null and emScaleList!=''">
+                emScaleList= #{emScaleList},
+            </if>
+        </trim>
+        WHERE
+        <if test="emphone != null and emphone!=''">
+            emphone= #{emphone}
+        </if>
+    </update>
+
+    <!--修改密码-->
+    <update id="updatePassword">
+        UPDATE enterprise_login
+        SET epassword=#{arg1}
+        WHERE ephone= #{arg0}
+    </update>
+
+    <!--修改密码-->
+    <update id="updateSelfDescription">
+        UPDATE enterprise_message
+        SET emintroduce=#{arg1}
+        WHERE emphone= #{arg0}
+    </update>
+
 </mapper>

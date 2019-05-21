@@ -36,14 +36,34 @@ public class CandidateServiceImpl implements CandidateService {
     }
 
     @Override
+    public void updateCandidateBaseInfo(CandidateMessage candidateMessage) {
+        candidateMapper.updateCandidateBaseInfo(candidateMessage);
+    }
+
+    @Override
+    public void updateIntroduce(String phone, String introduce) {
+        candidateMapper.updateIntroduce(phone,introduce);
+    }
+
+    @Override
     public List<JobPositionAndEnterpriseMessage> getAllJobList() {
         return jobPositionMapper.getAllJobList();
+    }
+
+    @Override
+    public List<CandidateMessage> getCandidateMessageByPhone(String phone) {
+        return candidateMapper.getCandidateMessageByPhone(phone);
     }
 
     @Override
     public void addCandidate(Candidate candidate, CandidateMessage candidateMessage) {
         candidateMapper.addCandidate(candidate);
         candidateMapper.addCandidateMessage(candidateMessage);
+    }
+
+    @Override
+    public void updatePassword(String phone, String cpassword) {
+        candidateMapper.updatePassword(phone,cpassword);
     }
 
     @Override

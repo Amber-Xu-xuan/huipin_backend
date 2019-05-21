@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qtu.zp.Vo.PageModel;
 import com.qtu.zp.Vo.SelectJobPositionConditionVo;
 import com.qtu.zp.domain.JobPosition;
+import com.qtu.zp.domain.JobPositionAndEnterpriseMessage;
 import com.qtu.zp.service.JobService;
 import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
@@ -78,14 +79,13 @@ public class JobController {
     @CrossOrigin
     @PostMapping(value = "/enterprise/getJobListByENameAndJName", produces = "application/json; charset=UTF-8")
     public Result getJobListByENameAndJName(@RequestBody SelectJobPositionConditionVo selectJobPositionConditionVo, HttpServletRequest request, HttpServletResponse response) {
-        String eName =selectJobPositionConditionVo.geteName();
+        String eName = selectJobPositionConditionVo.geteName();
         String jName = selectJobPositionConditionVo.getjName();
         if (eName == "" || eName == null) {
             return ResultFactory.buildFailResult("请先登录您的账号或完善您的企业信息");
-        } else if(jName == "" || jName == null) {
+        } else if (jName == "" || jName == null) {
             return ResultFactory.buildFailResult("请输入您要查询的职位名称");
-        }else
-        {
+        } else {
             PageModel result = jobService.getJobListByENameAndJName(selectJobPositionConditionVo.getPageCode(), selectJobPositionConditionVo.getPageSize(), selectJobPositionConditionVo.geteName(), selectJobPositionConditionVo.getjName());
             return ResultFactory.buildSuccessResult(result);
         }
@@ -94,5 +94,11 @@ public class JobController {
     }
 
 
-//        热门职位
+    //        热门职位
+    @CrossOrigin
+    @PostMapping(value = "/selectHotJobPosition", produces = "application/json; charset=UTF-8")
+    public Result selectHotJobPosition() {
+        List<JobPositionAndEnterpriseMessage> jb = jobService.selectHotJobPosition();
+        return ResultFactory.buildSuccessResult(jb);
+    }
 }

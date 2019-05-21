@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.qtu.zp.dao.JobPositionMapper">
     <resultMap id="JobPosition" type="com.qtu.zp.domain.JobPosition">
-    <id column="jpId" property="jpId"/>
-    <result column="jName" property="jName"/>
-    <result column="salary" property="salary"/>
-    <result column="experienceDuration" property="experienceDuration"/>
-    <result column="education" property="education"/>
-    <result column="obligation" property="obligation"/>
-    <result column="qualification" property="qualification"/>
-    <result column="workAddress" property="workAddress"/>
-    <result column="jType" property="jType"/>
-    <result column="jPublishDate" property="jPublishDate"/>
-    <result column="stopRecruitDate" property="stopRecruitDate"/>
-    <result column="eName" property="eName"/>
+        <id column="jpId" property="jpId"/>
+        <result column="jName" property="jName"/>
+        <result column="salary" property="salary"/>
+        <result column="experienceDuration" property="experienceDuration"/>
+        <result column="education" property="education"/>
+        <result column="obligation" property="obligation"/>
+        <result column="qualification" property="qualification"/>
+        <result column="workAddress" property="workAddress"/>
+        <result column="jType" property="jType"/>
+        <result column="jPublishDate" property="jPublishDate"/>
+        <result column="stopRecruitDate" property="stopRecruitDate"/>
+        <result column="eName" property="eName"/>
 
-</resultMap>
+    </resultMap>
 
     <resultMap id="JobPositionAndEnterprise" type="com.qtu.zp.domain.JobPositionAndEnterpriseMessage">
         <id column="jpId" property="jpId"/>
@@ -32,18 +32,18 @@
         <result column="eName" property="eName"/>
 
         <association property="enterpriseMessage" javaType="com.qtu.zp.domain.EnterpriseMessage">
-        <id column="emid" property="emid"/>
-        <result column="emName" property="emName"/>
-        <result column="emintroduce" property="emintroduce"/>
-        <result column="emstablishmentDate" property="emstablishmentDate"/>
-        <result column="emaddress" property="emaddress"/>
-        <result column="emphone" property="emphone"/>
-        <result column="ememail" property="ememail"/>
-        <result column="emnum" property="emnum"/>
-        <!--<result column="businessScope" property="businessScope"/>-->
-        <result column="enterpriceStatus" property="enterpriceStatus"/>
-        <result column="emFinancing" property="emFinancing"/>
-        <result column="emScaleList" property="emScaleList"/>
+            <id column="emid" property="emid"/>
+            <result column="emName" property="emName"/>
+            <result column="emintroduce" property="emintroduce"/>
+            <result column="emstablishmentDate" property="emstablishmentDate"/>
+            <result column="emaddress" property="emaddress"/>
+            <result column="emphone" property="emphone"/>
+            <result column="ememail" property="ememail"/>
+            <result column="emnum" property="emnum"/>
+            <!--<result column="businessScope" property="businessScope"/>-->
+            <result column="enterpriceStatus" property="enterpriceStatus"/>
+            <result column="emFinancing" property="emFinancing"/>
+            <result column="emScaleList" property="emScaleList"/>
         </association>
 
 
@@ -64,6 +64,7 @@
         WHERE j.eName = #{eName}
     </select>
 
+
     <!--企业用户是否发布了同一个职位-->
     <select id="getJobListByENameAndJName" resultMap="JobPosition">
         SELECT *
@@ -73,11 +74,18 @@
     </select>
 
     <select id="getAllJobList" resultMap="JobPositionAndEnterprise">
-        SELECT * FROM job_position j,enterprise_message e where e.emName = j.eName
+        SELECT j.*,e.* FROM job_position j,enterprise_message e,business_information b where e.emName = j.eName AND b.isVerification="通过验证" and b.eName =e.emName
+
+    </select>
+
+    <!--热门职位-->
+    <select id="selectHotJobPosition" resultMap="JobPositionAndEnterprise">
+        select * from job_position j,enterprise_message e where j.eName=e.emName order by collectNum DESC limit 6;
     </select>
 
     <!--招聘企业中心-->
-    <select id="getJobListByeName" parameterType="java.lang.String" resultType="com.qtu.zp.domain.JobPositionAndEnterpriseMessage">
+    <select id="getJobListByeName" parameterType="java.lang.String"
+            resultType="com.qtu.zp.domain.JobPositionAndEnterpriseMessage">
         SELECT * FROM job_position j where j.eName = #{eName}
     </select>
 
@@ -113,8 +121,9 @@
                 eName,
             </if>
             <if test="jType != null and jType!=''">
-                jType
+                jType,
             </if>
+            collectNum
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="jName != null and jName!=''">
@@ -145,34 +154,37 @@
                 #{eName},
             </if>
             <if test="jType != null and jType!=''">
-                #{jType}
+                #{jType},
             </if>
+            0
         </trim>
     </insert>
 
 
 
+
     <!--通过条件筛选出相关岗位信息,todo-->
     <!--JobPositonAndEnterprise-->
-    <select id="getJobListByFilterCondition" parameterType="com.qtu.zp.Vo.FilterConditionVo" resultMap="JobPositionAndEnterprise">
-        select *  from job_position j,enterprise_message e
+    <select id="getJobListByFilterCondition" parameterType="com.qtu.zp.Vo.FilterConditionVo"
+            resultMap="JobPositionAndEnterprise">
+        select * from job_position j,enterprise_message e
         <where>
             j.eName = e.emName
 
-            <if  test="filterSalary!=null and filterSalary != ''">
-               and j.salary=#{filterSalary}
+            <if test="filterSalary!=null and filterSalary != ''">
+                and j.salary=#{filterSalary}
             </if>
 
-            <if  test="filterExperience!=null and filterExperience != ''">
+            <if test="filterExperience!=null and filterExperience != ''">
                 and j.experienceDuration=#{filterExperience}
             </if>
-            <if  test="filterEducation!=null and filterEducation != ''">
-                and  j.education=#{filterEducation}
+            <if test="filterEducation!=null and filterEducation != ''">
+                and j.education=#{filterEducation}
             </if>
-            <if  test="filterFinancing!=null and filterFinancing != ''">
+            <if test="filterFinancing!=null and filterFinancing != ''">
                 and e.emFinancing=#{filterFinancing}
             </if>
-            <if  test="filterCompanyScale!=null and filterCompanyScale != ''">
+            <if test="filterCompanyScale!=null and filterCompanyScale != ''">
                 and e.emScaleList=#{filterCompanyScale}
             </if>
 
@@ -213,7 +225,7 @@
             </if>
 
             <if test="jPublishDate != null and jPublishDate!=''">
-                jPublishDate=  #{jPublishDate},
+                jPublishDate= #{jPublishDate},
             </if>
             <if test="stopRecruitDate != null and stopRecruitDate!=''">
                 stopRecruitDate=#{stopRecruitDate},
@@ -222,15 +234,19 @@
         WHERE jpId = #{jpId}
     </update>
 
+    <update id="addcollectNumByJpId" parameterType="java.lang.String">
+        UPDATE job_position set collectNum = collectNum + 1 WHERE  jpId = #{jpId}
+    </update>
+
     <delete id="deleteJobPosition" parameterType="java.lang.String">
         delete from job_position where jpId = #{jpId}
     </delete>
 
     <!--批量删除-->
-    <delete id="deleteManyJobPositionByJpId"  parameterType = "java.util.List">
+    <delete id="deleteManyJobPositionByJpId" parameterType="java.util.List">
         delete from job_position where 1>2
             or id in
-        <foreach collection="list"  item="item" open="(" separator="," close=")"  >
+        <foreach collection="list" item="item" open="(" separator="," close=")">
                  #{item}
         </foreach>
     </delete>

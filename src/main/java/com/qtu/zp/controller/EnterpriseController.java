@@ -6,6 +6,7 @@ import com.qtu.zp.Vo.EnterpriseRegisterModel;
 import com.qtu.zp.Vo.LoginModel;
 import com.qtu.zp.Vo.PageModel;
 import com.qtu.zp.domain.EnterpriseMessage;
+import com.qtu.zp.domain.JobPositionAndEnterpriseMessage;
 import com.qtu.zp.service.EnterpriseService;
 import com.qtu.zp.service.JobService;
 import com.qtu.zp.utils.result.Result;
@@ -25,7 +26,7 @@ import java.util.List;
  * @Author: AmberXu
  * @Date: 2019/4/11 21:46
  */
-@Api(value = "企业管理",tags = "企业管理")
+@Api(value = "企业管理", tags = "企业管理")
 @RestController
 @RequestMapping(value = "/zp")
 public class EnterpriseController {
@@ -72,21 +73,6 @@ public class EnterpriseController {
         }
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/enterprise/logout", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
-    public Result logout(BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
-        HttpSession session = request.getSession();
-        session.removeAttribute("enterpriseInfo");
-        Enterprise enterprise = (Enterprise) session.getAttribute("enterpriseInfo");
-        if (enterprise == null) {
-            String message = String.format("注销退出失败。");
-            return ResultFactory.buildFailResult(message);
-        } else {
-            String message = String.format("注销退出成功。");
-            return ResultFactory.buildFailResult(message);
-        }
-    }
-
     /**
      * @param
      * @param request
@@ -113,6 +99,14 @@ public class EnterpriseController {
         }
     }
 
+    //    修改密码
+    @CrossOrigin
+    @PostMapping(value = "/enterprise/updatePassword", produces = "application/json; charset=UTF-8")
+    public Result updatePassword(@RequestBody Enterprise enterprise) {
+        enterpriseService.updatePassword(enterprise.getEphone(), enterprise.getEpassword());
+        return ResultFactory.buildSuccessResult("密码修改成功");
+    }
+
     @RequestMapping(value = "/registerEnterprise", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public Result registerEnterprise(@RequestBody EnterpriseRegisterModel enterpriseRegister, HttpServletRequest request, HttpServletResponse response) {
         if (enterpriseRegister == null) {
@@ -122,38 +116,48 @@ public class EnterpriseController {
             String message = String.format("成功注册。");
             return ResultFactory.buildSuccessResult(message);
         }
-
     }
+
 
     //    游客模式：通过点击职位card上公司名称跳转到相应的公司信息页面 getEnterpriseByEName
     @CrossOrigin
     @RequestMapping(value = "/getEnterpriseByEName", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    public Result getEnterpriseByEName(@RequestParam("eName") String eName ,HttpServletRequest request, HttpServletResponse response) {
+    public Result getEnterpriseByEName(@RequestParam("eName") String eName, HttpServletRequest request, HttpServletResponse response) {
 
-         List<EnterpriseMessage> enterpriseMessages = enterpriseService.getEnterpriseByEName(eName);
-         if(enterpriseMessages == null){
-             return ResultFactory.buildFailResult("无法获取该公司的相关信息。");
-         }else{
-             return ResultFactory.buildSuccessResult(enterpriseMessages);
+        List<EnterpriseMessage> enterpriseMessages = enterpriseService.getEnterpriseByEName(eName);
+        if (enterpriseMessages == null) {
+            return ResultFactory.buildFailResult("无法获取该公司的相关信息。");
+        } else {
+            return ResultFactory.buildSuccessResult(enterpriseMessages);
         }
     }
 
-//    游客模式：获取公司的工商信息
+    //更新职位信息
+    @CrossOrigin
+    @PostMapping(value = "/enterprise/editEnterprise", produces = "application/json;charset=UTF-8")
+    public Result updateEnterprise(@RequestBody EnterpriseRegisterModel enterpriseRegisterModel, HttpServletRequest request, HttpServletResponse response) {
+        enterpriseService.updateEnterprise(enterpriseRegisterModel.getEnterprise());
+        enterpriseService.updateEnterpriseMessage(enterpriseRegisterModel.getEnterpriseMessage());
+        String message = String.format("成功修改。");
+        return ResultFactory.buildSuccessResult(message);
+    }
+
+    //    游客模式：获取公司的工商信息
 //    todo：时间转换
     @CrossOrigin
 //    @RequestMapping(value = "/getBusinessInformation", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
-    @GetMapping(value = "/getBusinessInformation",produces = "application/json; charset=UTF-8")
-    public Result getBusinessInformation(@RequestParam("eName") String eName,HttpServletRequest request, HttpServletResponse response){
+    @GetMapping(value = "/getBusinessInformation", produces = "application/json; charset=UTF-8")
+    public Result getBusinessInformation(@RequestParam("eName") String eName, HttpServletRequest request, HttpServletResponse response) {
         BusinessInformation businessInformation = enterpriseService.getBusinessInformation(eName);
-        if(businessInformation == null){
+        if (businessInformation == null) {
             return ResultFactory.buildFailResult("由于该企业未进行认证，无法获取该公司的工商信息");
-        }else if( businessInformation.getIsVerification().equals("否")){
+        } else if (businessInformation.getIsVerification().equals("否")) {
 //            当该公司的工商信息没有获得验证时，不能显示改公司的工商信息
             return ResultFactory.buildFailResult("由于该企业未进行认证，无法显示该公司的工商信息");
-        }else {
+        } else {
             return ResultFactory.buildSuccessResult(businessInformation);
         }
-//        热门职位
+
     }
 
 

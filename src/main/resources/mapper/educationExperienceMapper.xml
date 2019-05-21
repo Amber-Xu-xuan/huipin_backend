@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.EducationExperienceMapper">
+
+    <select id="getEducationExperienceByCondition" resultType="com.qtu.zp.domain.EducationExperience">
+        SELECT *
+        FROM education_experience r
+        WHERE r.phone = #{arg0}
+        AND  r.educationBackground = #{arg1}
+        AND r.major = #{arg2}
+    </select>
+
+    <!--求职者获取教育经历信息-->
+    <select id="getEducationExperienceByPhone" parameterType="java.lang.String" resultType="com.qtu.zp.domain.EducationExperience">
+        SELECT * FROM education_experience j where j.phone = #{phone}
+    </select>
+
+    <select id="findEducationExperienceByPhone" parameterType="java.lang.String" resultType="com.qtu.zp.domain.EducationExperience">
+        SELECT * FROM education_experience j where j.phone = #{phone}
+    </select>
+
+    <!--添加教育经历信息-->
+    <insert id="addEducationExperience" parameterType="com.qtu.zp.domain.EducationExperience">
+        insert into education_experience
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="school != null and school!=''">
+                school,
+            </if>
+            <if test="educationBackground != null and educationBackground!=''">
+                educationBackground,
+            </if>
+            <if test="major != null and major!=''">
+                major,
+            </if>
+            <if test="studyingStartTime != null and studyingStartTime!=''">
+                studyingStartTime,
+            </if>
+            <if test="graduationTime != null and graduationTime!=''">
+                graduationTime,
+            </if>
+            <if test="internship != null and internship!=''">
+                internship,
+            </if>
+            <if test="phone != null and phone!=''">
+                phone,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="school != null and school!=''">
+                #{school},
+            </if>
+            <if test="educationBackground != null and educationBackground!=''">
+                #{educationBackground},
+            </if>
+            <if test="major != null and major!=''">
+                #{major},
+            </if>
+            <if test="studyingStartTime != null and studyingStartTime!=''">
+                #{studyingStartTime},
+            </if>
+            <if test="graduationTime != null and graduationTime!=''">
+                #{graduationTime},
+            </if>
+            <if test="internship != null and internship!=''">
+                #{internship},
+            </if>
+            <if test="phone != null and phone!=''">
+                #{phone},
+            </if>
+        </trim>
+    </insert>
+    <!--修改教育经历信息-->
+    <update id="updateEducationExperience" parameterType="com.qtu.zp.domain.EducationExperience">
+        UPDATE  education_experience
+        <trim prefix="set" suffixOverrides=",">
+            <if test="school != null and school!=''">
+                school=#{school},
+            </if>
+            <if test="educationBackground != null and educationBackground!=''">
+                educationBackground= #{educationBackground},
+            </if>
+            <if test="major != null and major!=''">
+                major= #{major},
+            </if>
+            <if test="studyingStartTime != null and studyingStartTime!=''">
+                studyingStartTime= #{studyingStartTime},
+            </if>
+            <if test="graduationTime != null and graduationTime!=''">
+                graduationTime=#{graduationTime},
+            </if>
+            <!--<if test="internship != null and internship!=''">-->
+                <!--internship= #{internship},-->
+            <!--</if>-->
+        </trim>
+    where rId =#{rId}
+    </update>
+
+    <delete id="deleteEducationExperience" parameterType="java.lang.String">
+        delete from  education_experience where rId = #{rId}
+    </delete>
+
+</mapper>

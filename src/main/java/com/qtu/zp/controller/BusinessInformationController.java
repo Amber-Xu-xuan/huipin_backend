@@ -31,8 +31,7 @@ public class BusinessInformationController {
 //        return ResultFactory.buildSuccessResult("测试");
 //    }
 
-//    @CrossOrigin
-//    @PostMapping(value = "/enterprise/addBusinessInformation ", produces = "application/json;charset=UTF-8")
+    @CrossOrigin
     @PostMapping(value = "enterprise/addBusinessInformation", produces = "application/json;charset=UTF-8")
     public Result addBusinessInformation (@RequestBody BusinessInformation  businessInformation, HttpServletRequest request, HttpServletResponse response) {
         if (businessInformation.geteName() == null || businessInformation.geteName() == "") {
@@ -45,8 +44,29 @@ public class BusinessInformationController {
                 businessInformationService.addBusinessInformation (businessInformation);
                 String message = String.format("成功添加。");
                 return ResultFactory.buildSuccessResult(message);
-
             }
+        }
+    }
+
+    //更新工商信息
+    @CrossOrigin
+    @PostMapping(value = "enterprise/updateBusinessInformation", produces = "application/json;charset=UTF-8")
+    public Result updateBusinessInformation (@RequestBody BusinessInformation businessInformation, HttpServletRequest request, HttpServletResponse response) {
+        businessInformationService.updateBusinessInformation (businessInformation);
+        String message = String.format("成功修改。");
+        return ResultFactory.buildSuccessResult(message);
+    }
+
+    //    企业用户中心：查询
+    @CrossOrigin
+    @GetMapping(value = "/enterprise/getBusinessInformationByEName", produces = "application/json; charset=UTF-8")
+    public Result getBusinessInformationByEName(@RequestParam("eName") String eName, HttpServletRequest request, HttpServletResponse response) {
+        if (eName == "" || eName == null) {
+            return ResultFactory.buildFailResult("请先登录您的账号或完善您的企业信息");
+        } else
+        {
+            BusinessInformation result = businessInformationService.getBusinessInformationByEName(eName);
+            return ResultFactory.buildSuccessResult(result);
         }
     }
 //
@@ -64,26 +84,6 @@ public class BusinessInformationController {
 //        return ResultFactory.buildSuccessResult(message);
 //    }
 //
-//    //更新职位信息
-//    @CrossOrigin
-//    @PostMapping(value = "/enterprise/updateBusinessInformation ", produces = "application/json;charset=UTF-8")
-//    public Result updateBusinessInformation (@RequestBody BusinessInformation businessInformation, HttpServletRequest request, HttpServletResponse response) {
-//        businessInformationService.updateBusinessInformation (businessInformation);
-//        String message = String.format("成功修改。");
-//        return ResultFactory.buildSuccessResult(message);
-//    }
 
-    //    企业用户中心：查询
-    @CrossOrigin
-    @GetMapping(value = "/enterprise/getBusinessInformationByEName", produces = "application/json; charset=UTF-8")
-    public Result getBusinessInformationByEName(@RequestParam("eName") String eName, HttpServletRequest request, HttpServletResponse response) {
-        if (eName == "" || eName == null) {
-            return ResultFactory.buildFailResult("请先登录您的账号或完善您的企业信息");
-        } else
-        {
-            BusinessInformation result = businessInformationService.getBusinessInformationByEName(eName);
-            return ResultFactory.buildSuccessResult(result);
-        }
-    }
 //        热门职位
 }

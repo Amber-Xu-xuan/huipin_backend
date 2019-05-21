@@ -8,11 +8,11 @@ public class Manager {
     private Integer mid;
     private String managerName; //
     private String headImage; //
-    private String jarea; //
     private String mpassword; //
 
-    private String mcreateTime; //
+    private String createTime; //
     private String mphone; //
+    private String email; //
 
     public Integer getMid() {
         return mid;
@@ -38,14 +38,6 @@ public class Manager {
         this.headImage = headImage;
     }
 
-    public String getJarea() {
-        return jarea;
-    }
-
-    public void setJarea(String jarea) {
-        this.jarea = jarea;
-    }
-
     public String getMpassword() {
         return mpassword;
     }
@@ -54,12 +46,12 @@ public class Manager {
         this.mpassword = mpassword;
     }
 
-    public String getMcreateTime() {
-        return mcreateTime;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setMcreateTime(String mcreateTime) {
-        this.mcreateTime = mcreateTime;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
     public String getMphone() {
@@ -68,5 +60,13 @@ public class Manager {
 
     public void setMphone(String mphone) {
         this.mphone = mphone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

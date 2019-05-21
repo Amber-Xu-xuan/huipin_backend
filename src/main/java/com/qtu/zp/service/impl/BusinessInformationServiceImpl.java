@@ -1,5 +1,7 @@
 package com.qtu.zp.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.qtu.zp.Vo.PageModel;
 import com.qtu.zp.dao.BusinessInformationMapper;
 import com.qtu.zp.domain.BusinessInformation;
@@ -29,8 +31,8 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
     }
 
     @Override
-    public void addBusinessInformation(BusinessInformation jobPosition) {
-        businessInformationMapper.addBusinessInformation(jobPosition);
+    public void addBusinessInformation(BusinessInformation businessInformation) {
+        businessInformationMapper.addBusinessInformation(businessInformation);
     }
 
     @Override
@@ -45,6 +47,28 @@ public class BusinessInformationServiceImpl implements BusinessInformationServic
 
     @Override
     public void updateBusinessInformation(BusinessInformation businessInformation) {
-
+        businessInformationMapper.updateBusinessInformation(businessInformation);
     }
+
+    //    管理员模块：查询所有未通过验证的公司信息
+    @Override
+    public PageModel getBusinessInfoByIsVerification(Integer pageCode, Integer pageSize, String phone) {
+        //使用Mybatis分页插件
+        PageHelper.startPage(pageCode,pageSize);
+
+        //调用分页查询方法，其实就是查询所有数据，mybatis自动帮我们进行分页计算
+        Page<BusinessInformation> page = businessInformationMapper.getBusinessInfoByIsVerification(phone);
+        return new PageModel(page.getTotal(),page.getResult());
+    }
+
+    @Override
+    public void editBusinessInfoIsVerificationByBId(String bId) {
+        businessInformationMapper.editBusinessInfoIsVerificationByBId(bId);
+    }
+
+    @Override
+    public void editBusinessInfoNotifyInfoByBId(String bId, String info) {
+        businessInformationMapper.editBusinessInfoNotifyInfoByBId(bId,"未通过验证，" + info);
+    }
+
 }

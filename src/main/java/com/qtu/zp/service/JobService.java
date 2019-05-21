@@ -35,4 +35,7 @@ public interface JobService {
 
     //    条件查询职位信息
     PageModel getJobListByENameAndJName(Integer pageCode, Integer pageSize, String eName, String jName);
+
+    //    热门职位
+    List<JobPositionAndEnterpriseMessage> selectHotJobPosition();
 }

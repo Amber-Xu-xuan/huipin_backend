@@ -5,13 +5,13 @@ package com.qtu.zp.domain;
  * @Date: 2019/3/31 9:43
  */
 //简历
-public class Resume {
+public class EducationExperience {
     private Integer rId;
     private String phone;
     private String school; // 学校名称
     private String educationBackground; // 学历
     private String major; // 所学专业
-    private String studyingTime; // 就读时间
+    private String studyingStartTime; // 就读时间
 
     private String graduationTime; // 毕业时间
     private String internship; // 实习情况（有实习、无实习）
@@ -57,12 +57,12 @@ public class Resume {
         this.major = major;
     }
 
-    public String getStudyingTime() {
-        return studyingTime;
+    public String getStudyingStartTime() {
+        return studyingStartTime;
     }
 
-    public void setStudyingTime(String studyingTime) {
-        this.studyingTime = studyingTime;
+    public void setStudyingStartTime(String studyingStartTime) {
+        this.studyingStartTime = studyingStartTime;
     }
 
     public String getGraduationTime() {

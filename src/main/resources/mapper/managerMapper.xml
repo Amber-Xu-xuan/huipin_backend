@@ -7,23 +7,29 @@
         <result column="headImage" property="headImage"/>
         <result column="createTime" property="createTime"/>
         <result column="mpassword" property="mpassword"/>
-        <result column="headImage" property="headImage"/>
-        <result column="createTime" property="createTime"/>
-        <result column="mpassword" property="mpassword"/>
         <result column="mphone" property="mphone"/>
+        <result column="email" property="email"/>
     </resultMap>
 
 
     <!--管理员通过电话号码获取自身信息-->
-    <select id="findManagerBy" parameterType="java.lang.String" resultMap="Manager">
+    <select id="findManagerByPhone" parameterType="java.lang.String" resultMap="Manager">
         SELECT *
         FROM manager m
         WHERE m.mphone = #{mphone}
     </select>
 
+    <!--StatisticCandidateNumByMonth-->
+    <select id="StatisticCandidateNumByMonth" resultType="com.qtu.zp.domain.StatisticResult">
+    select date_format(ccreateTime, '%Y-%m') as date, count(*) as sum from candidate_login group by date_format(ccreateTime, '%Y-%m');
+    </select>
+
+    <select id="StatisticEnterpriseNumByMonth" resultType="com.qtu.zp.domain.StatisticResult">
+        select date_format(ecreateTime, '%Y-%m') as date, count(*) as sum from enterprise_login group by date_format(ecreateTime, '%Y-%m');
+    </select>
 
 
-
-
-
+    <update id="updatePassword">
+        UPDATE manager set mpassword = #{arg1} WHERE  mphone = #{arg0}
+    </update>
 </mapper>

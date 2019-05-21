@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Mapper
 public interface JobPositionMapper {
-    //    企业用户查询所发布的所有职位信息
+    //    分页：企业用户查询所发布的所有职位信息
     Page<JobPosition> findJobListByEName(String eName);
 
     List<JobPositionAndEnterpriseMessage> getAllJobList();
@@ -41,4 +41,10 @@ public interface JobPositionMapper {
 
     //    条件查询职位信息
     Page<JobPosition> getJobListByENameAndJName(String eName, String jName);
+
+//    添加收藏数
+    void addcollectNumByJpId(String jpId);
+
+//    热门职位
+    List<JobPositionAndEnterpriseMessage> selectHotJobPosition();
 }
