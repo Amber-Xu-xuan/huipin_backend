@@ -74,7 +74,7 @@
     </select>
 
     <select id="getAllJobList" resultMap="JobPositionAndEnterprise">
-        SELECT j.*,e.* FROM job_position j,enterprise_message e,business_information b where e.emName = j.eName AND b.isVerification="通过验证" and b.eName =e.emName
+        SELECT j.*,e.* FROM job_position j,enterprise_message e,business_information b where e.emName = j.eName AND b.isVerification="通过验证" and b.eName =e.emName order by rand()
 
     </select>
 
@@ -167,7 +167,7 @@
     <!--JobPositonAndEnterprise-->
     <select id="getJobListByFilterCondition" parameterType="com.qtu.zp.Vo.FilterConditionVo"
             resultMap="JobPositionAndEnterprise">
-        select * from job_position j,enterprise_message e
+        select j.* ,e.* from job_position j,enterprise_message e,business_information b
         <where>
             j.eName = e.emName
 
@@ -187,6 +187,8 @@
             <if test="filterCompanyScale!=null and filterCompanyScale != ''">
                 and e.emScaleList=#{filterCompanyScale}
             </if>
+            AND b.isVerification="通过验证"
+            and b.eName=e.emName
 
         </where>
         <!--  <if test="start!=null and size!=null">

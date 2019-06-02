@@ -37,7 +37,9 @@
         <!--  springboot整合 redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-redis</artifactId>
+            <!--<artifactId>spring-boot-starter-redis</artifactId>-->
+            <!--由于使用的是springboot2.0-->
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
 
         <!--数据库连接-->
@@ -80,10 +82,15 @@
         </dependency>
 
         <!--pageHelper分页-->
+        <!--<dependency>-->
+            <!--<groupId>com.github.pagehelper</groupId>-->
+            <!--<artifactId>pagehelper</artifactId>-->
+            <!--<version>4.0.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-            <version>4.0.0</version>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.5</version>
         </dependency>
 
         <dependency>

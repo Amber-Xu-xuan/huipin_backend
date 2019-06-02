@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.InterviewNoticeMapper">
+
+    <select id="getInterviewNoticeByPhone" resultType="com.qtu.zp.domain.InterviewNotice" parameterType="java.lang.String">
+        SELECT *
+        FROM interview_notice
+        WHERE cphone = #{phone}
+    </select>
+
+    <select id="getInterviewNoticeByCPhoneAndENameAndInjob" resultType="com.qtu.zp.domain.InterviewNotice">
+        SELECT * FROM interview_notice j where j.eName = #{arg1} AND  j.cphone=#{arg0} AND j.injob=#{arg2}
+    </select>
+
+
+    <select id="findInterviewNoticeByPhone" parameterType="java.lang.String" resultType="com.qtu.zp.domain.InterviewNotice">
+        SELECT * FROM interview_notice j where j.eName = #{eName}
+    </select>
+
+    <select id="findInterviewNoticeByPhoneAndEName" resultType="com.qtu.zp.domain.InterviewNotice">
+        SELECT * FROM interview_notice j where j.eName = #{arg0} AND  j.inaddress like "%"#{arg1}"%"
+    </select>
+
+    <insert id="addInterviewNotice" parameterType="com.qtu.zp.domain.InterviewNotice">
+        insert into interview_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="inaddress != null and inaddress!=''">
+                inaddress,
+            </if>
+            <if test="indateTime != null and indateTime!=''">
+                indateTime,
+            </if>
+            <if test="indataFile != null and indataFile!=''">
+                indataFile,
+            </if>
+            <if test="innoticeTime != null and innoticeTime!=''">
+                innoticeTime,
+            </if>
+            <if test="injob != null and injob!=''">
+                injob,
+            </if>
+            <if test="eName != null and eName!=''">
+                eName,
+            </if>
+            <if test="cphone != null and cphone!=''">
+                cphone,
+            </if>
+            <if test="ephone != null and ephone!=''">
+                ephone,
+            </if>
+
+                inStatus,
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="inaddress != null and inaddress!=''">
+                #{inaddress},
+            </if>
+            <if test="indateTime != null and indateTime!=''">
+                #{indateTime},
+            </if>
+            <if test="indataFile != null and indataFile!=''">
+                #{indataFile},
+            </if>
+            <if test="innoticeTime != null and innoticeTime!=''">
+                #{innoticeTime},
+            </if>
+            <if test="injob != null and injob!=''">
+                #{injob},
+            </if>
+            <if test="eName != null and eName!=''">
+                #{eName},
+            </if>
+            <if test="cphone != null and cphone!=''">
+                #{cphone},
+            </if>
+            <if test="ephone != null and ephone!=''">
+                #{ephone},
+            </if>
+
+               "您有面试通知，请查看",
+
+        </trim>
+    </insert>
+    <!--修改社交主页信息-->
+    <update id="updateInterviewNotice" parameterType="com.qtu.zp.domain.InterviewNotice">
+        UPDATE  interview_notice
+        <trim prefix="set" suffixOverrides=",">
+            <if test="inaddress != null and inaddress!=''">
+                inaddress=#{inaddress},
+            </if>
+            <if test="indataFile != null and indataFile!=''">
+                indataFile= #{indataFile},
+            </if>
+            <if test="indateTime != null and indateTime!=''">
+                indateTime=#{indateTime},
+            </if>
+            <if test="innoticeTime != null and innoticeTime!=''">
+                innoticeTime= #{innoticeTime},
+            </if>
+            <if test="injob != null and injob!=''">
+                injob=#{injob},
+            </if>
+            <if test="eName != null and eName!=''">
+                eName= #{eName},
+            </if>
+            <if test="cphone != null and cphone!=''">
+                cphone=#{cphone},
+            </if>
+            <if test="ephone != null and ephone!=''">
+                ephone= #{ephone},
+            </if>
+        </trim>
+        where inId =#{inId}
+    </update>
+
+    <delete id="deleteInterviewNotice" parameterType="java.lang.String">
+        delete from  interview_notice where inId = #{inId}
+    </delete>
+
+</mapper>

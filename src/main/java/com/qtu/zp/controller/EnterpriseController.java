@@ -147,11 +147,11 @@ public class EnterpriseController {
     @CrossOrigin
 //    @RequestMapping(value = "/getBusinessInformation", method = RequestMethod.GET, produces = "application/json; charset=UTF-8")
     @GetMapping(value = "/getBusinessInformation", produces = "application/json; charset=UTF-8")
-    public Result getBusinessInformation(@RequestParam("eName") String eName, HttpServletRequest request, HttpServletResponse response) {
+    public Result getBusinessInformation(@RequestParam("eName") String eName) {
         BusinessInformation businessInformation = enterpriseService.getBusinessInformation(eName);
         if (businessInformation == null) {
             return ResultFactory.buildFailResult("由于该企业未进行认证，无法获取该公司的工商信息");
-        } else if (businessInformation.getIsVerification().equals("否")) {
+        } else if (!businessInformation.getIsVerification().equals("通过验证")) {
 //            当该公司的工商信息没有获得验证时，不能显示改公司的工商信息
             return ResultFactory.buildFailResult("由于该企业未进行认证，无法显示该公司的工商信息");
         } else {

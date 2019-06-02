@@ -78,7 +78,7 @@ public class JobController {
     //    查询职位信息
     @CrossOrigin
     @PostMapping(value = "/enterprise/getJobListByENameAndJName", produces = "application/json; charset=UTF-8")
-    public Result getJobListByENameAndJName(@RequestBody SelectJobPositionConditionVo selectJobPositionConditionVo, HttpServletRequest request, HttpServletResponse response) {
+    public Result getJobListByENameAndJName(@RequestBody SelectJobPositionConditionVo selectJobPositionConditionVo) {
         String eName = selectJobPositionConditionVo.geteName();
         String jName = selectJobPositionConditionVo.getjName();
         if (eName == "" || eName == null) {

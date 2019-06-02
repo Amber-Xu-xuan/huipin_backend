@@ -118,12 +118,11 @@ public class CandidateController {
     @CrossOrigin
 //    首页通过筛选条件，返回工作列表
     @GetMapping(value = "/getJobListByFilterCondition",produces = "application/json; charset=UTF-8")
-    public  Result getJobListByFilter(FilterConditionVo selectCondition,HttpServletRequest request, HttpServletResponse response){
+    public  Result getJobListByFilter(FilterConditionVo selectCondition){
         System.out.println("过滤器的条件" + selectCondition.toString());
         List<JobPositionAndEnterpriseMessage> jobPositions = candidateService.getJobListByFilterCondition(selectCondition);
-//            System.out.println("获取到的数据" + jobPositions.toString());
-        if (jobPositions == null) {
-            return ResultFactory.buildFailResult("无法获取数据");
+        if (jobPositions.size()==0) {
+            return ResultFactory.buildFailResult("没有找到符合条件的职位信息！");
         } else {
             return ResultFactory.buildSuccessResult(jobPositions);
         }

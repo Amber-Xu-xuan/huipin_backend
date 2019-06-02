@@ -154,7 +154,7 @@
                 tianYanCha=#{tianYanCha},
             </if>
 
-            isVerification="未通过验证"
+            isVerification="未通过验证,请重新审核您上传的工商信息"
         </trim>
         where
             eName=#{eName}

@@ -2,6 +2,7 @@ package com.qtu.zp.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qtu.zp.Vo.FilterConditionVo;
 import com.qtu.zp.Vo.PageModel;
 import com.qtu.zp.dao.EnterpriseMapper;
@@ -43,6 +44,7 @@ public class JobServiceImpl implements JobService{
 
         //调用分页查询方法，其实就是查询所有数据，mybatis自动帮我们进行分页计算
         Page<JobPosition> page = jobPositionMapper.findJobListByEName(eName);
+//        PageInfo info = new PageInfo<>(page.getResult());
         return new PageModel(page.getTotal(),page.getResult());
     }
 

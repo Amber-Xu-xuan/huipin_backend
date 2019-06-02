@@ -38,6 +38,9 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
     @Resource
     SocialHomepageMapper socialHomepageMapper;
 
+    @Resource
+    CandidateMapper candidateMapper;
+
 
     @Override
     public void addRecruitmentSituation(RecruitmentSituation recruitmentSituation) {
@@ -92,6 +95,7 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
     public RecruitmentSituationVo selectRecruitmentSituationAboutCandidateByphone(String phone) {
         //        获取求职信息
 
+        List<CandidateMessage> candidateMessage = candidateMapper.getCandidateMessageByPhone(phone);
         List<WorkExperience> workExperienceList = workExperienceMapper.getWorkExperienceByPhone(phone);
         List<ProjectExperience> projectExperienceList = projectExperienceMapper.getProjectExperienceByPhone(phone);
         List<EducationExperience> educationExperienceList = educationExperienceMapper.getEducationExperienceByPhone(phone);
@@ -99,6 +103,12 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
 
         RecruitmentSituationVo candidateVo = new RecruitmentSituationVo();
         candidateVo.setPhone(phone);
+        candidateVo.setCandidateMessage(candidateMessage.get(0));
+        candidateVo.setWorkExperienceList(workExperienceList);
+        candidateVo.setProjectExperienceList(projectExperienceList);
+        candidateVo.setEducationExperienceList(educationExperienceList);
+        candidateVo.setSocialHomepageList(socialHomepages);
+
 
         List<Integer> weIDData = new ArrayList<Integer>();
         List<Integer> peIDData = new ArrayList<Integer>();
