@@ -50,16 +50,16 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
     @Override
     public PageModel selectRecruitmentSituationByeNameAndjName(SelectRecruitmentSituationVo selectRecruitmentSituationVo) {
         //使用Mybatis分页插件
-        PageHelper.startPage(selectRecruitmentSituationVo.getPageCode(),selectRecruitmentSituationVo.getPageSize());
+        PageHelper.startPage(selectRecruitmentSituationVo.getPageCode(), selectRecruitmentSituationVo.getPageSize());
 
         //调用分页查询方法，其实就是查询所有数据，mybatis自动帮我们进行分页计算
-        Page<RecruitmentSituation> page = recruitmentSituationMapper.selectRecruitmentSituationByeNameAndjName(selectRecruitmentSituationVo.geteName(),selectRecruitmentSituationVo.getjName());
-        return new PageModel(page.getTotal(),page.getResult());
+        Page<RecruitmentSituation> page = recruitmentSituationMapper.selectRecruitmentSituationByeNameAndjName(selectRecruitmentSituationVo.geteName(), selectRecruitmentSituationVo.getjName());
+        return new PageModel(page.getTotal(), page.getResult());
     }
 
     @Override
     public List<String> selectPhoneByeNameAndjName(SelectRecruitmentSituationVo selectRecruitmentSituationVo) {
-        return recruitmentSituationMapper.selectPhoneByeNameAndjName(selectRecruitmentSituationVo.geteName(),selectRecruitmentSituationVo.getjName());
+        return recruitmentSituationMapper.selectPhoneByeNameAndjName(selectRecruitmentSituationVo.geteName(), selectRecruitmentSituationVo.getjName());
     }
 
     @Override
@@ -69,23 +69,23 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
         List<WorkExperience> workExperienceList = workExperienceMapper.getWorkExperienceByPhone(phone);
         List<ProjectExperience> projectExperienceList = projectExperienceMapper.getProjectExperienceByPhone(phone);
         List<EducationExperience> educationExperienceList = educationExperienceMapper.getEducationExperienceByPhone(phone);
-        List<SocialHomepage> socialHomepages=  socialHomepageMapper.getSocialHomepageByPhone(phone);
+        List<SocialHomepage> socialHomepages = socialHomepageMapper.getSocialHomepageByPhone(phone);
 
         AllMessageAboutCandidateVo candidateVo = new AllMessageAboutCandidateVo();
         candidateVo.setPhone(phone);
 
-        if (!workExperienceList.isEmpty()){
+        if (!workExperienceList.isEmpty()) {
             candidateVo.setWorkExperience(workExperienceList);
             candidateVo.setWorkExperience(true);
         }
-        if(!projectExperienceList.isEmpty()){
+        if (!projectExperienceList.isEmpty()) {
             candidateVo.setProjectExperience(projectExperienceList);
             candidateVo.setProjectExperience(true);
         }
-        if(!educationExperienceList.isEmpty()){
+        if (!educationExperienceList.isEmpty()) {
             candidateVo.setEducationExperience(educationExperienceList);
         }
-        if(!socialHomepages.isEmpty()){
+        if (!socialHomepages.isEmpty()) {
             candidateVo.setSocialHomepage(socialHomepages);
         }
         return candidateVo;
@@ -99,7 +99,7 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
         List<WorkExperience> workExperienceList = workExperienceMapper.getWorkExperienceByPhone(phone);
         List<ProjectExperience> projectExperienceList = projectExperienceMapper.getProjectExperienceByPhone(phone);
         List<EducationExperience> educationExperienceList = educationExperienceMapper.getEducationExperienceByPhone(phone);
-        List<SocialHomepage> socialHomepages=  socialHomepageMapper.getSocialHomepageByPhone(phone);
+        List<SocialHomepage> socialHomepages = socialHomepageMapper.getSocialHomepageByPhone(phone);
 
         RecruitmentSituationVo candidateVo = new RecruitmentSituationVo();
         candidateVo.setPhone(phone);
@@ -112,57 +112,57 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
 
         List<Integer> weIDData = new ArrayList<Integer>();
         List<Integer> peIDData = new ArrayList<Integer>();
-        if (!workExperienceList.isEmpty()){
+        if (!workExperienceList.isEmpty()) {
             Integer size = workExperienceList.size();
             candidateVo.setHavaWorkExperience("有" + size + "条记录");
-            for (WorkExperience we:workExperienceList){
-                 weIDData.add(we.getWeId());
+            for (WorkExperience we : workExperienceList) {
+                weIDData.add(we.getWeId());
             }
             candidateVo.setWeId(weIDData);
-        }else{
+        } else {
             candidateVo.setHavaWorkExperience("无工作经验");
         }
-        if(!projectExperienceList.isEmpty()){
+        if (!projectExperienceList.isEmpty()) {
             Integer size = projectExperienceList.size();
             candidateVo.setHavaProjectExperience("有" + size + "条记录");
-            for (ProjectExperience pe:projectExperienceList){
+            for (ProjectExperience pe : projectExperienceList) {
                 peIDData.add(pe.getPeId());
             }
             candidateVo.setPeId(peIDData);
-        }else{
+        } else {
             candidateVo.setHavaProjectExperience("无项目经验");
         }
-        if(!educationExperienceList.isEmpty()){
+        if (!educationExperienceList.isEmpty()) {
 //            StringBuffer educations = new StringBuffer();
-            Map<String,String> educations = new HashMap<String, String>();
-            for(EducationExperience ee:educationExperienceList){
-                educations.put(ee.getEducationBackground(),ee.getMajor());
+            Map<String, String> educations = new HashMap<String, String>();
+            for (EducationExperience ee : educationExperienceList) {
+                educations.put(ee.getEducationBackground(), ee.getMajor());
             }
             String educ = educations.toString();
-            if(educ == null || educ == ""){
+            if (educ == null || educ == "") {
                 candidateVo.setEducationBackground("该用户没有填写学历信息");
-            }else if(educ.contains("博士")){
+            } else if (educ.contains("博士")) {
                 candidateVo.setEducationBackground("博士");
                 candidateVo.setMajor(educations.get("博士"));
-            }else if(educ.contains("硕士")){
+            } else if (educ.contains("硕士")) {
                 candidateVo.setEducationBackground("硕士");
                 candidateVo.setMajor(educations.get("硕士"));
-            }else if(educ.contains("本科")){
+            } else if (educ.contains("本科")) {
                 candidateVo.setEducationBackground("本科");
                 candidateVo.setMajor(educations.get("本科"));
-            }else if(educ.contains("中专")){
+            } else if (educ.contains("中专")) {
                 candidateVo.setEducationBackground("中专");
                 candidateVo.setMajor(educations.get("中专"));
-            }else if(educ.contains("高中")){
+            } else if (educ.contains("高中")) {
                 candidateVo.setEducationBackground("高中");
-            }else{
+            } else {
                 candidateVo.setEducationBackground("初中及以下");
             }
 
         }
-        if(!socialHomepages.isEmpty()){
+        if (!socialHomepages.isEmpty()) {
             StringBuffer socialPageBuffer = new StringBuffer();
-            for(SocialHomepage sh:socialHomepages){
+            for (SocialHomepage sh : socialHomepages) {
                 socialPageBuffer.append(sh.getHomePage() + "|");
             }
             String homePage = socialPageBuffer.toString();
@@ -176,5 +176,4 @@ public class RecruitmentSituationServiceImpl implements RecruitmentSituationServ
         List<JobPosition> j = recruitmentSituationMapper.getJobPositionByRecruitmentSituationAndPhone(phone);
         return j;
     }
-
 }

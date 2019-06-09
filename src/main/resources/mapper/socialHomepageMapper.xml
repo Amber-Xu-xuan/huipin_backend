@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qtu.zp.dao.SocialHomepageMapper">
+
+    <select id="getSocialHomepageByPhone" resultType="com.qtu.zp.domain.SocialHomepage" parameterType="java.lang.String">
+        SELECT *
+        FROM social_homepage r
+        WHERE r.phone = #{phone}
+    </select>
+
+
+    <select id="findSocialHomepageByPhone" parameterType="java.lang.String" resultType="com.qtu.zp.domain.SocialHomepage">
+        SELECT * FROM social_homepage j where j.phone = #{phone}
+    </select>
+
+    <insert id="addSocialHomepage" parameterType="com.qtu.zp.domain.SocialHomepage">
+        insert into social_homepage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="homePage != null and homePage!=''">
+                homePage,
+            </if>
+            <if test="phone != null and phone!=''">
+                phone,
+            </if>
+            <if test="platform != null and platform!=''">
+                platform,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="homePage != null and homePage!=''">
+                #{homePage},
+            </if>
+            <if test="phone != null and phone!=''">
+                #{phone},
+            </if>
+            <if test="platform != null and platform!=''">
+                #{platform},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateSocialHomepage" parameterType="com.qtu.zp.domain.SocialHomepage">
+        UPDATE  social_homepage
+        <trim prefix="set" suffixOverrides=",">
+            <if test="homePage != null and homePage!=''">
+                homePage=#{homePage},
+            </if>
+            <if test="platform != null and platform!=''">
+                platform= #{platform},
+            </if>
+        </trim>
+        where shId =#{shId}
+    </update>
+
+    <delete id="deleteSocialHomepage" parameterType="java.lang.String">
+        delete from  social_homepage where shId = #{shId}
+    </delete>
+
+</mapper>

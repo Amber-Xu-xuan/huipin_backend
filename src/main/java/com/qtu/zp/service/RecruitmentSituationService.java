@@ -6,6 +6,7 @@ import com.qtu.zp.Vo.RecruitmentSituationVo;
 import com.qtu.zp.Vo.SelectRecruitmentSituationVo;
 import com.qtu.zp.domain.JobPosition;
 import com.qtu.zp.domain.RecruitmentSituation;
+import com.qtu.zp.domain.StatisticResult;
 
 import java.util.List;
 
@@ -28,4 +29,5 @@ public interface RecruitmentSituationService {
     RecruitmentSituationVo selectRecruitmentSituationAboutCandidateByphone(String phone);
 
     List<JobPosition> getJobPositionByDiliveryResumeAndPhone(String phone);
+
 }

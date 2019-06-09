@@ -28,6 +28,10 @@
         select date_format(ecreateTime, '%Y-%m') as date, count(*) as sum from enterprise_login group by date_format(ecreateTime, '%Y-%m');
     </select>
 
+    <select id="StatisticResumeNumByMonth" resultType="com.qtu.zp.domain.StatisticResult">
+        select date_format(date, '%Y-%m') as date, count(*) as sum from recruitment_situation group by date_format(date, '%Y-%m');
+    </select>
+
 
     <update id="updatePassword">
         UPDATE manager set mpassword = #{arg1} WHERE  mphone = #{arg0}

@@ -36,6 +36,14 @@
         WHERE a.emName = #{eName}
     </select>
 
+    <select id="getEnterpriseMessageByEmphone" parameterType="java.lang.String" resultMap="EnterpriseMessage">
+        SELECT *
+        FROM enterprise_message a
+        WHERE a.emphone = #{emphone}
+    </select>
+
+
+
     <!--企业用户登录-->
     <select id="findEnterpriseByPhone" parameterType="java.lang.String" resultMap="Enterprise">
         SELECT *

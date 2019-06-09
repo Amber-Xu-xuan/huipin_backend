@@ -17,4 +17,5 @@ public interface ManagerMapper {
     List<StatisticResult> StatisticCandidateNumByMonth();
     List<StatisticResult> StatisticEnterpriseNumByMonth();
     void updatePassword(String mphone,String mpassword);
+    List<StatisticResult> StatisticResumeNumByMonth();
 }

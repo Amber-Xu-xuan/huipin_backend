@@ -26,9 +26,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Resource
     EnterpriseMapper enterpriseMapper;
 
-
-
-
     @Resource
     BusinessInformationMapper businessInformationMapper;
 
@@ -40,6 +37,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Enterprise findEnterpriseByPhone(String ephone) {
         return enterpriseMapper.findEnterpriseByPhone(ephone);
+    }
+
+    @Override
+    public List<EnterpriseMessage> getEnterpriseMessageByEmphone(String emphone) {
+        return enterpriseMapper.getEnterpriseMessageByEmphone(emphone);
     }
 
     @Override

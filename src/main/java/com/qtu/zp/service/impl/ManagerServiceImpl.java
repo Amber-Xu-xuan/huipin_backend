@@ -39,4 +39,10 @@ public class ManagerServiceImpl implements ManagerService{
     public void updatePassword(String mphone, String mpassword) {
         managerMapper.updatePassword(mphone,mpassword);
     }
+
+    //    统计每个月的简历投递增量
+    @Override
+    public List<StatisticResult> StatisticResumeNumByMonth() {
+        return managerMapper.StatisticResumeNumByMonth();
+    }
 }

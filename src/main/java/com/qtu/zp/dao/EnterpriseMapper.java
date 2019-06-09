@@ -21,6 +21,8 @@ public interface EnterpriseMapper {
 
     List<EnterpriseMessage> getEnterpriseByEName(String eName);
 
+    List<EnterpriseMessage> getEnterpriseMessageByEmphone(String emphone);
+
     void updatePassword(String ephone,String epassword);
 
     //    更新Enterprise

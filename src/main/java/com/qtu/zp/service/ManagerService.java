@@ -15,4 +15,6 @@ public interface ManagerService {
     List<StatisticResult> StatisticCandidateNumByMonth();
     List<StatisticResult> StatisticEnterpriseNumByMonth();
     void updatePassword(String mphone,String mpassword);
+    //    统计每个月的简历投递增量
+    List<StatisticResult> StatisticResumeNumByMonth();
 }

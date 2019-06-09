@@ -17,6 +17,7 @@ public interface EnterpriseService {
     //     通过电话号码获取用户信息
     Enterprise findEnterpriseByPhone(String phone);
 
+    List<EnterpriseMessage> getEnterpriseMessageByEmphone(String emphone);
 
 
     void updatePassword(String ephone,String epassword);

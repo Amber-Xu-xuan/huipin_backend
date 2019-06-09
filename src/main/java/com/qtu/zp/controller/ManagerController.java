@@ -118,6 +118,26 @@ public class ManagerController {
         }
     }
 
+    @GetMapping(value = "/manager/StatisticResume")
+    public Result StatisticResume(String phone){
+        if (phone == null || phone==""){
+            return ResultFactory.buildFailResult("请登录管理员账号，您目前并无该权限");
+        }else {
+            List<StatisticResult> result =  managerService.StatisticResumeNumByMonth();
+
+            StatisticResult s = new StatisticResult();
+            List<String> date = new ArrayList<String>();
+            List<Integer> sum = new ArrayList<Integer>();
+            for (StatisticResult x: result){
+                date.add(x.getDate());
+                sum.add(x.getSum());
+            }
+            s.setDateList(date);
+            s.setSumList(sum);
+            return ResultFactory.buildSuccessResult(s);
+        }
+    }
+
     @CrossOrigin
     @PostMapping(value = "/manager/updatePassword",produces = "application/json; charset=UTF-8")
     public Result updatePassword(@RequestBody Manager manager){

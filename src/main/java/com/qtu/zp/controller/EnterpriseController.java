@@ -13,13 +13,20 @@ import com.qtu.zp.utils.result.Result;
 import com.qtu.zp.utils.result.ResultFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,7 +36,7 @@ import java.util.List;
 @Api(value = "企业管理", tags = "企业管理")
 @RestController
 @RequestMapping(value = "/zp")
-public class EnterpriseController {
+public class EnterpriseController extends AbstractController {
 
     @Resource
     private EnterpriseService enterpriseService;
@@ -53,22 +60,24 @@ public class EnterpriseController {
      * @return 登录操作
      */
 
-    @ApiOperation("企业管理登陆")
+    @ApiOperation("企业管理登录")
     @CrossOrigin
     @RequestMapping(value = "/enterprise/login", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
     public Result login(@RequestBody LoginModel user, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
         HttpSession session = request.getSession();
         Enterprise enterprise = enterpriseService.findEnterpriseByPhone(user.getPhone());
-        if (enterprise.getEpassword().equals(user.getPassword())) {
+        if(enterprise == null){
+            return ResultFactory.buildFailResult("该账号未进行注册");
+        }else if (enterprise.getEpassword().equals(user.getPassword())) {
             session.setAttribute("enterprise", enterprise);
 //            System.out.println("登录session的id是====" + session.getId());
 
             return ResultFactory.buildSuccessResult(enterprise);
         } else if (bindingResult.hasErrors()) {
-            String message = String.format("登陆失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
+            String message = String.format("登录失败，详细信息[%s]。", bindingResult.getFieldError().getDefaultMessage());
             return ResultFactory.buildFailResult(message);
         } else {
-            String message = String.format("登陆失败，用户名、密码信息不正确。");
+            String message = String.format("登录失败，用户名、密码信息不正确。");
             return ResultFactory.buildFailResult(message);
         }
     }
@@ -160,5 +169,66 @@ public class EnterpriseController {
 
     }
 
+    @CrossOrigin
+    @GetMapping(value = "enterprise/getEnterpriseAvatar",produces = "application/json; charset=UTF-8")
+    public Result getEnterpriseAvatar(String emphone){
+        if (emphone == null || emphone == "") {
+            return ResultFactory.buildFailResult("请重新登录");
+        } else {
+            List<EnterpriseMessage> enterpriseMessageList = enterpriseService.getEnterpriseMessageByEmphone(emphone);
+            EnterpriseMessage enterpriseMessage = enterpriseMessageList.get(0);
+            return ResultFactory.buildSuccessResult(enterpriseMessage.getEmheadImage());
+        }
+    }
 
+//    @RequestBody EnterpriseMessage enterpriseMessage
+    @CrossOrigin
+    @PostMapping(value = "enterprise/uploadEnterpriseAvatar",produces = "application/json; chartset=UTF-8")
+    public Result uploadEnterpriseAvatar(HttpServletRequest req, @RequestParam("file") MultipartFile file,@RequestParam("emphone") String emphone, Model m){
+        try {
+            if (file.isEmpty()){
+                return ResultFactory.buildFailResult("请选择您上传的头像文件，再重新上传");
+            }else if(emphone == null || emphone == ""){
+                return ResultFactory.buildFailResult("请登录账号，再重新上传");
+            }
+            //2.根据时间戳创建新的文件名，这样即便是第二次上传相同名称的文件，也不会把第一次的文件覆盖了
+            String fileName = System.currentTimeMillis() + file.getOriginalFilename();
+
+//            图片储存的路径
+//            String filePath = "C://Program Files//Apache Software Foundation//Tomcat 8.0//webapps//"; // 上传后的路径
+            String filePath = "G://dasixia//study_graduation_project//source program//frontend//vue//test//static//enterpriseAvatar"; // 上传后的路径
+            //3.通过req.getServletContext().getRealPath("") 获取当前项目的真实路径，然后拼接前面的文件名
+//            String destFileName = req.getServletContext().getRealPath("") + "uploaded" + File.separator + fileName;
+            //4.第一次运行的时候，这个文件所在的目录往往是不存在的，这里需要创建一下目录（创建到了webapp下uploaded文件夹下）
+            String destFileName = filePath + "//" + fileName;
+            File destFile = new File(destFileName);
+
+            destFile.getParentFile().mkdirs();
+            //5.把浏览器上传的文件复制到希望的位置
+            file.transferTo(destFile);
+            //6.把文件名放在model里，以便后续显示用
+            m.addAttribute("fileName", fileName);
+//            存进数据库
+            EnterpriseMessage enterpriseMessage = new EnterpriseMessage();
+            enterpriseMessage.setEmheadImage(fileName);
+            enterpriseMessage.setEmphone(emphone);
+            enterpriseService.updateEnterpriseMessage(enterpriseMessage);
+
+            return ResultFactory.buildSuccessResult(fileName);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return ResultFactory.buildFailResult("上传失败," + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResultFactory.buildFailResult("上传失败," + e.getMessage());
+        }
+
+//        return "showImg";
+
+    }
+
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
+        return null;
+    }
 }

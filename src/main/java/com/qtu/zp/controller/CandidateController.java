@@ -119,7 +119,6 @@ public class CandidateController {
 //    首页通过筛选条件，返回工作列表
     @GetMapping(value = "/getJobListByFilterCondition",produces = "application/json; charset=UTF-8")
     public  Result getJobListByFilter(FilterConditionVo selectCondition){
-        System.out.println("过滤器的条件" + selectCondition.toString());
         List<JobPositionAndEnterpriseMessage> jobPositions = candidateService.getJobListByFilterCondition(selectCondition);
         if (jobPositions.size()==0) {
             return ResultFactory.buildFailResult("没有找到符合条件的职位信息！");
@@ -172,6 +171,18 @@ public class CandidateController {
         } else {
             List<CandidateMessage> candidateMessagesList = candidateService.getCandidateMessageByPhone(candidateMessage.getPhone());
             return ResultFactory.buildSuccessResult(candidateMessagesList);
+        }
+    }
+
+    @CrossOrigin
+    @GetMapping(value = "candidate/getCandidateAvatar",produces = "application/json; charset=UTF-8")
+    public Result getCandidateAvatar(String phone){
+        if (phone == null || phone == "") {
+            return ResultFactory.buildFailResult("请重新登录");
+        } else {
+            List<CandidateMessage> candidateMessagesList = candidateService.getCandidateMessageByPhone(phone);
+            CandidateMessage candidateMessage = candidateMessagesList.get(0);
+            return ResultFactory.buildSuccessResult(candidateMessage.getHeadImage());
         }
     }
 
